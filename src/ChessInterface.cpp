@@ -39,7 +39,7 @@ void ChessInterface::saveGame(string path)
 	game.save(path);
 }
 
-std::set<Location> ChessInterface::changedLocations() const
+set<Location> ChessInterface::changedLocations() const
 {
 	return game.locationsChangedByLastMove();
 }
