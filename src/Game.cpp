@@ -13,6 +13,7 @@ using namespace std;
 // I'm planning to use.
 void Game::load(string path)
 {
+	/*
 	clear();
 	xmldoc doc(path);
 	xmldoc::iterator pieces = doc.select("XPath selector to find piece nodes");
@@ -30,12 +31,14 @@ void Game::load(string path)
 		}
 		_history.push_back(move);
 	}
+	*/
 }
 
 // Using pseudo-code, since I don't yet know the API of the XML library
 // I'm planning to use.
 void Game::save(string path)
 {
+	/*
 	xmldocwriter doc(path);
 	
 	doc.beginHistoryTag();
@@ -57,6 +60,7 @@ void Game::save(string path)
 	}
 	doc.endBoardTag();
 	doc.write();
+	*/
 }
 
 void Game::startNew()
