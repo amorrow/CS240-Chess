@@ -17,7 +17,7 @@ private:
 	ChessPieceType _type;
 public:
 	Piece(ChessPieceType t);
-	set<Location> validMoves() const;
+	std::set<Location> validMoves() const;
 	ChessPieceType type() const;
 };
 

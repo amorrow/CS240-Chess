@@ -9,9 +9,10 @@
 #include <iostream>
 #include "SelectDialog.h"
 #include "Chess.h"
+#include "ChessInterface.h"
 
 
-Chess::Chess(std::string gladefile):gui(0),logId(0)
+Chess::Chess(std::string gladefile):gui(0),logId(0),chessInterface(0)
 {
 	Glib::RefPtr<Gnome::Glade::Xml> chessXml = Gnome::Glade::Xml::create(gladefile);
 	chessXml->get_widget_derived("Chess_Main",gui);
@@ -61,7 +62,7 @@ Chess::Chess(std::string gladefile):gui(0),logId(0)
 	//***************************************
 	//set your init code here***********************************************************
 
-
+	chessInterface = new ChessInterface();
 
 
 	//**********************************************************************************
@@ -71,7 +72,8 @@ Chess::~Chess()
 {
 	//set you clean up code here****
 
-
+	delete chessInterface;
+	chessInterface = 0;
 
 	//******************************
 	g_log_remove_handler(0,logId);//remove reference to data
