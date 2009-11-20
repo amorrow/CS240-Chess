@@ -16,19 +16,18 @@ LIBS = `pkg-config $(GTKMM) $(SIGC) $(LIBGLADE) --libs`
 
 #LIB_FLAGS D_LOG_DOMAIN is used by g_log in the ChessGui library to seperate logging messages from the library
 # from logging messages from the students code
-#IMPORTANT: You must add a compiler option here for the library to be dynamic
 LIB_FLAGS = -DG_LOG_DOMAIN=\"ChessGui\" -shared
 
 
-#change this to a dynamic library name
 LIBRARY= lib/libcs240.so
 EXE_NAME = bin/chess
 
+SOURCES = $(foreach file, $(shell ls src/*.cpp), $(basename $(notdir $(file))))
 
 
 LIB_OBJ_FILES = lib/obj/ChessGui.o lib/obj/ChessGuiBoard.o lib/obj/ChessGuiBoardCell.o \
 		lib/obj/ChessGuiImages.o lib/obj/SelectDialog.o
-OBJS = obj/main.o obj/Chess.o
+OBJS = $(foreach file, $(SOURCES), obj/$(file).o)
 
 
 .PHONY: run clean bin lib memtest
@@ -67,14 +66,19 @@ obj/main.o: src/main.cpp lib/inc/ChessGuiImages.h inc/Chess.h
 obj/Chess.o: src/Chess.cpp inc/Chess.h lib/inc/SelectDialog.h lib/inc/ChessGuiDefines.h lib/inc/ChessGui.h
 	$(CC) -c $(FLAGS) $(CFLAGS) -o obj/Chess.o src/Chess.cpp
 
+obj/%.o : src/%.cpp
+	$(CC) -c $(FLAGS) $(CFLAGS) -o $@ $<
+
+depend : depend.mk
+	@-rm depend.mk
+	@for f in $(SOURCES) ; do g++ -MM -MT obj/$$f.o $(FLAGS) $(CFLAGS) src/$$f.cpp >> depend.mk; done
+
+include depend.mk
 
 
 
 
 
-
-#This is currently a STATIC library, you must change it to a DYNAMIC library
-#You must also add a compiler option to the variable LIB_FLAGS in order for the library to be dynamic
 $(LIBRARY): $(LIB_OBJ_FILES) 
 	g++ -o $(LIBRARY) $(LIB_FLAGS) $(LIB_OBJ_FILES)
 

@@ -11,6 +11,7 @@
 #include "ChessDefinitions.h"
 #include <set>
 #include <list>
+#include <string>
 
 class Game
 {
@@ -34,7 +35,7 @@ public:
 	// Variable access
 	ChessGameStatus status() const;
 	std::string message() const;
-	Board& board();
+	Board& board() const;
 	
 	// Returns true if a valid move was made.
 	// False if the move requested cannot be performed.

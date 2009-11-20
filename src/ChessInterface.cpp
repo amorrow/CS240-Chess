@@ -11,12 +11,12 @@ using namespace std;
 
 set<Location> ChessInterface::availableMovesFromSquare(Location loc) const
 {
-	return game.board().at(loc).availableMoves();
+	return game.board().at(loc).validMoves();
 }
 
 bool ChessInterface::movePiece(Location oldLoc, Location newLoc)
 {
-	return game.movePiece(oldLoc, newLoc);
+	return game.makeMove(oldLoc, newLoc);
 }
 
 bool ChessInterface::undoMove()
@@ -26,7 +26,7 @@ bool ChessInterface::undoMove()
 
 void ChessInterface::startNewGame()
 {
-	game.clear();
+	game.startNew();
 }
 
 void ChessInterface::loadGame(string path)
