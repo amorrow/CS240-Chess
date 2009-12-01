@@ -5,6 +5,9 @@
 #ifndef _CS240CHESS_MOVE_H
 #define _CS240CHESS_MOVE_H
 
+#include "Piece.h"
+#include "Location.h"
+
 class Move
 {
 private:
