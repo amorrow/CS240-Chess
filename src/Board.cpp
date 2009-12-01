@@ -6,17 +6,30 @@
 
 using namespace std;
 
-Board::Board()
-{}
+Board::Board() : board(NULL)
+{
+	board = new Piece*[BOARD_NUM_ROWS];
+	for (int i = 0; i < BOARD_NUM_ROWS; i++)
+	{
+		board[i] = new Piece[BOARD_NUM_COLS];
+	}
+}
 
 Board::~Board()
-{}
+{
+	for (int i = 0; i < BOARD_NUM_ROWS; i++)
+	{
+		delete [] board[i];
+		board[i] = NULL;
+	}
+	delete [] board;
+}
 
 Piece Board::at(Location loc)
 {
 	if (loc.isValid())
 	{
-		return board[loc];
+		return board[loc.row()][loc.column()];
 	}
 	else
 	{
@@ -46,23 +59,24 @@ void Board::movePiece(Location oldLoc, Location newLoc)
 	Piece toMove = this->at(oldLoc);
 	Piece blank;
 
-	board.erase(newLoc);
-	board.insert(make_pair(newLoc, toMove));
-	board.erase(oldLoc);
-	board.insert(make_pair(oldLoc, blank));
+	board[newLoc.row()][newLoc.column()] = toMove;
+	board[oldLoc.row()][oldLoc.column()] = blank;
 }
 
 void Board::insertPiece(Location loc, Piece p)
 {
-	board.erase(loc);
-	board.insert(make_pair(loc, p));
+	board[loc.row()][loc.column()] = p;
 }
 
 void Board::clear()
 {
-	board.clear();
-	// TODO iterate over all possible locations
-	// and insert a blank piece there
+	for (int row = 0; row < BOARD_NUM_ROWS; row++)
+	{
+		for (int col = 0; col < BOARD_NUM_COLS; col++)
+		{
+			board[row][col] = Piece();
+		}
+	}
 }
 
 void Board::placeDefaultPieces()

@@ -17,7 +17,6 @@ private:
 	ChessPieceType _type;
 public:
 	Piece(); // creates a NoPiece type piece
-	Piece(ChessPieceType t);
 	virtual std::set<Location> validMoves() const;
 	ChessPieceType type() const;
 };

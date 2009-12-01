@@ -31,4 +31,7 @@ typedef enum
 	ChessPieceTypeNoPiece,
 } ChessPieceType;
 
+#define BOARD_NUM_ROWS 8
+#define BOARD_NUM_COLS 8
+
 #endif

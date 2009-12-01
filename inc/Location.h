@@ -8,13 +8,15 @@
 class Location
 {
 	private:
-		int row;
-		int column;
+		int _row;
+		int _column;
 	public:
 		Location();
-		Location(int _row, int _col);
+		Location(int row, int col);
 		bool isValid() const;
 		bool operator<(const Location& other) const;
+		int row() const;
+		int column() const;
 };
 
 #endif

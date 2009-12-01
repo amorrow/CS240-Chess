@@ -11,9 +11,6 @@ using namespace std;
 Piece::Piece() : _type(ChessPieceTypeNoPiece)
 {}
 
-Piece::Piece(ChessPieceType t) : _type(t)
-{}
-
 ChessPieceType Piece::type() const
 {
 	return _type;

@@ -13,7 +13,7 @@
 class Board
 {
 private:
-	std::map<Location, Piece> board;
+	Piece** board;
 public:
 	// Constructors & Destructors
 	Board();

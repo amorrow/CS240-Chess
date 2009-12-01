@@ -4,11 +4,11 @@
 
 #include "Location.h"
 
-Location::Location() : row(-1), column(-1)
+Location::Location() : _row(-1), _column(-1)
 {
 }
 
-Location::Location(int _row, int _col) : row(_row), column(_col)
+Location::Location(int row, int col) : _row(row), _column(col)
 {
 }
 
@@ -20,10 +20,20 @@ bool Location::isValid() const
 
 bool Location::operator<(const Location& other) const
 {
-	if (row < other.row || (row == other.row && column < other.column))
+	if (_row < other._row || (_row == other._row && _column < other._column))
 	{
 		return true;
 	}
 	return false;
+}
+
+int Location::row() const
+{
+	return _row;
+}
+
+int Location::column() const
+{
+	return _column;
 }
 
