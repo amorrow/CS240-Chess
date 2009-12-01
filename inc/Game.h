@@ -13,6 +13,10 @@
 #include <list>
 #include <string>
 
+// Status Messages
+extern std::string ChessStatusMessageWhitesTurn;
+extern std::string ChessStatusMessageBlacksTurn;
+
 class Game
 {
 private:
@@ -35,7 +39,7 @@ public:
 	// Variable access
 	ChessGameStatus status() const;
 	std::string message() const;
-	Board& board() const;
+	Board& board();
 	
 	// Returns true if a valid move was made.
 	// False if the move requested cannot be performed.

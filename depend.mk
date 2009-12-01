@@ -353,6 +353,7 @@ obj/ChessInterface.o: src/ChessInterface.cpp inc/ChessInterface.h \
   inc/ChessDefinitions.h inc/Move.h inc/Location.h
 obj/Game.o: src/Game.cpp inc/Game.h inc/Location.h inc/Board.h \
   inc/Piece.h inc/ChessDefinitions.h inc/Move.h
+obj/Location.o: src/Location.cpp inc/Location.h
 obj/main.o: src/main.cpp /usr/include/gtkmm-2.4/gtkmm/main.h \
   /usr/include/glibmm-2.4/glibmm.h \
   /usr/lib/glibmm-2.4/include/glibmmconfig.h \

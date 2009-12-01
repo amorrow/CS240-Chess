@@ -30,8 +30,8 @@ public:
 	// Used to highlight squares when a player selects a piece.
 	// Precondition: there's a piece on the square specified.
 	// Check by calling pieceAtLocation() beforehand.
-	std::set<Location> availableMovesFromSquare(int row, int col) const;
-	std::set<Location> availableMovesFromSquare(Location loc) const;
+	std::set<Location> availableMovesFromSquare(int row, int col);
+	std::set<Location> availableMovesFromSquare(Location loc);
 	// Returns true if the piece is allowed to move there and the move was completed.
 	// Returns false if an illegal move was indicated.
 	bool movePiece(int oldRow, int oldCol, int newRow, int newCol);
@@ -44,8 +44,8 @@ public:
 	// Allows partial re-draws of the board.
 	std::set<Location> changedLocations() const;
 	// Indicates which piece belongs at a given location.
-	ChessPieceType pieceAtLocation(int row, int col) const;
-	ChessPieceType pieceAtLocation(Location loc) const;
+	ChessPieceType pieceAtLocation(int row, int col);
+	ChessPieceType pieceAtLocation(Location loc);
 };
 
 #endif

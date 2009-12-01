@@ -9,7 +9,7 @@
 #include <map>
 using namespace std;
 
-set<Location> ChessInterface::availableMovesFromSquare(Location loc) const
+set<Location> ChessInterface::availableMovesFromSquare(Location loc)
 {
 	return game.board().at(loc).validMoves();
 }
@@ -44,7 +44,7 @@ set<Location> ChessInterface::changedLocations() const
 	return game.locationsChangedByLastMove();
 }
 
-ChessPieceType ChessInterface::pieceAtLocation(Location loc) const
+ChessPieceType ChessInterface::pieceAtLocation(Location loc)
 {
 	return game.board().typeAt(loc);
 }

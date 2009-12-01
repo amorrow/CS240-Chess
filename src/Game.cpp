@@ -9,6 +9,10 @@
 
 using namespace std;
 
+// Defines
+string ChessStatusMessageWhitesTurn = "White's Turn";
+string ChessStatusMessageBlacksTurn = "Black's Turn";
+
 // Using pseudo-code, since I don't yet know the API of the XML library
 // I'm planning to use.
 void Game::load(string path)
@@ -146,7 +150,8 @@ bool Game::undoMove()
 	{
 		return false;
 	}
-	Move last = _history.pop_back();
+	Move last = _history.back();
+	_history.pop_back();
 	_board.movePiece(last.newLocation(), last.oldLocation());
 	if (last.pieceTaken() != NULL)
 	{
@@ -196,7 +201,7 @@ void Game::updateGameStatus()
 		}
 		else
 		{
-			_status == ChessGameStatusWhitesTurn;
+			_status = ChessGameStatusWhitesTurn;
 		}
 	}
 }
