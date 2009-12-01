@@ -12,6 +12,12 @@ Location::Location(int _row, int _col) : row(_row), column(_col)
 {
 }
 
+bool Location::isValid() const
+{
+	// TODO implement this
+	return true;
+}
+
 bool Location::operator<(const Location& other) const
 {
 	if (row < other.row || (row == other.row && column < other.column))

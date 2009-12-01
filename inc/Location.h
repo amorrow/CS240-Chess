@@ -13,6 +13,7 @@ class Location
 	public:
 		Location();
 		Location(int _row, int _col);
+		bool isValid() const;
 		bool operator<(const Location& other) const;
 };
 

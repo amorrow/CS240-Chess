@@ -15,10 +15,13 @@ class Board
 private:
 	std::map<Location, Piece> board;
 public:
+	// Constructors & Destructors
+	Board();
+	~Board();
 	// Accessing & moving
-	Piece at(Location loc) const;
-	ChessPieceType typeAt(Location loc) const;
-	bool hasPieceAt(Location loc) const;
+	Piece at(Location loc);
+	ChessPieceType typeAt(Location loc);
+	bool hasPieceAt(Location loc);
 	// Precondition: the specified move is valid
 	void movePiece(Location oldLoc, Location newLoc);
 	// Precondition: the specified space is empty
@@ -30,11 +33,11 @@ public:
 	void placeDefaultPieces();
 	
 	// Algorithms
-	bool stalemate() const;
-	bool whiteInCheck() const;
-	bool blackInCheck() const;
-	bool whiteInCheckmate() const;
-	bool blackInCheckmate() const;
+	bool stalemate();
+	bool whiteInCheck();
+	bool blackInCheck();
+	bool whiteInCheckmate();
+	bool blackInCheckmate();
 };
 
 #endif

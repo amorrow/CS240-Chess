@@ -205,3 +205,10 @@ void Game::updateGameStatus()
 		}
 	}
 }
+
+bool Game::belongsToCurrentPlayer(Piece p)
+{
+	//TODO implement this
+	return false;
+}
+

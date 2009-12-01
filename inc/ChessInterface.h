@@ -16,9 +16,9 @@ private:
 	Game game;
 public:
 	// Indicates whose turn it is.
-	ChessGameStatus gameStatus() const;
+	ChessGameStatus gameStatus();
 	// Message to be shown to the user (such as, White is in check)
-	std::string message() const;
+	std::string message();
 	// Clears the board and starts a new game.
 	void startNewGame();
 	// Loads the game at the specified path.
@@ -42,7 +42,7 @@ public:
 	bool undoMove();
 	// Indicates which locations were changed by the last move or undo.
 	// Allows partial re-draws of the board.
-	std::set<Location> changedLocations() const;
+	std::set<Location> changedLocations();
 	// Indicates which piece belongs at a given location.
 	ChessPieceType pieceAtLocation(int row, int col);
 	ChessPieceType pieceAtLocation(Location loc);

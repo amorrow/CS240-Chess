@@ -4,7 +4,7 @@
 
 #include "Move.h"
 
-Move::Move() : _piece(ChessPieceTypeNoPiece), _taken(NULL)
+Move::Move() : _taken(NULL)
 {}
 
 Move::~Move()

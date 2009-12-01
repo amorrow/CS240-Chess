@@ -1,3 +1,5 @@
+obj/Board.o: src/Board.cpp inc/Board.h inc/Location.h inc/Piece.h \
+  inc/ChessDefinitions.h
 obj/Chess.o: src/Chess.cpp lib/inc/SelectDialog.h \
   /usr/include/gtkmm-2.4/gtkmm/dialog.h /usr/include/glibmm-2.4/glibmm.h \
   /usr/lib/glibmm-2.4/include/glibmmconfig.h \
@@ -701,3 +703,7 @@ obj/main.o: src/main.cpp /usr/include/gtkmm-2.4/gtkmm/main.h \
   /usr/include/gtkmm-2.4/gtkmm/eventbox.h \
   /usr/include/gtkmm-2.4/gtkmm/aspectframe.h \
   /usr/include/gtkmm-2.4/gtkmm/frame.h lib/inc/ChessGuiBoardCell.h
+obj/Move.o: src/Move.cpp inc/Move.h inc/Piece.h inc/Location.h \
+  inc/ChessDefinitions.h
+obj/Piece.o: src/Piece.cpp inc/Piece.h inc/Location.h \
+  inc/ChessDefinitions.h
