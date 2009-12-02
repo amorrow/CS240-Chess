@@ -121,6 +121,7 @@ bool Game::makeMove(Location oldLoc, Location newLoc)
 	set<Location>::iterator locIter = valid.find(newLoc);
 	if (locIter == valid.end()) // the suggested move was not found in the set of valid ones
 	{
+		g_debug("Game::makeMove asked to move to an invalid spot!");
 		return false;
 	}
 	// determine if there's a piece in the new location
@@ -129,11 +130,13 @@ bool Game::makeMove(Location oldLoc, Location newLoc)
 		PiecePtr pieceToTake = _board.at(newLoc);
 		if (belongsToCurrentPlayer(pieceToTake))
 		{
+			g_debug("Game::makeMove asked to take the player's own piece!");
 			return false;
 		}
 		else // belongs to the other guy, take it
 		{
 			move.take(pieceToTake);
+			g_debug("Game::makeMove taking an enemy piece...");
 		}
 	}
 	// add the move object to history

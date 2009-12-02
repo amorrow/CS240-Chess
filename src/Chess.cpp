@@ -216,6 +216,10 @@ void Chess::on_CellSelected(int row, int col, int button)
 				moveIter++;
 			}
 		}
+		else
+		{
+			// TODO not allowed to move that. show a message
+		}
 	}
 }
 
