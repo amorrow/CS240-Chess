@@ -46,6 +46,10 @@ public:
 	// Indicates which piece belongs at a given location.
 	ChessPieceType pieceAtLocation(int row, int col);
 	ChessPieceType pieceAtLocation(Location loc);
+	// Indicates the color of a piece at a given location.
+	// Precondition: There is a piece at the location.
+	ChessColor colorAtLocation(int row, int col);
+	ChessColor colorAtLocation(Location loc);
 };
 
 #endif

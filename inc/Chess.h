@@ -67,6 +67,7 @@ class Chess
 		///@{
 		ChessInterface * chessInterface;
 		LocationPtr cellSelected;
+		void RedrawBoard(bool fullRedraw=false);
 		///@}
 
 	public:

@@ -54,6 +54,12 @@ ChessPieceType Board::typeAt(Location loc)
 	}
 }
 
+// Precondition: there is a piece at the location
+ChessColor Board::colorAt(Location loc)
+{
+	return this->at(loc)->color();
+}
+
 bool Board::hasPieceAt(Location loc)
 {
 	if (loc.isValid())
@@ -97,7 +103,7 @@ void Board::placeDefaultPieces()
 	this->clear();
 	// TODO place pieces
 	PiecePtr ptr(new Rook(ChessColorWhite));
-	board[0][0] = ptr;
+	board[7][7] = ptr;
 }
 
 bool Board::stalemate()

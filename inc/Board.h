@@ -21,6 +21,7 @@ public:
 	// Accessing & moving
 	PiecePtr at(Location loc);
 	ChessPieceType typeAt(Location loc);
+	ChessColor colorAt(Location loc);
 	bool hasPieceAt(Location loc);
 	// Precondition: the specified move is valid
 	void movePiece(Location oldLoc, Location newLoc);

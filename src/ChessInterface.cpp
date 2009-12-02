@@ -59,3 +59,13 @@ ChessPieceType ChessInterface::pieceAtLocation(int row, int col)
 	return this->pieceAtLocation(Location(row, col));
 }
 
+ChessColor ChessInterface::colorAtLocation(Location loc)
+{
+	return game.board().colorAt(loc);
+}
+
+ChessColor ChessInterface::colorAtLocation(int row, int col)
+{
+	return this->colorAtLocation(Location(row, col));
+}
+

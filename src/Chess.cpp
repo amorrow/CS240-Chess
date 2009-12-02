@@ -66,6 +66,7 @@ Chess::Chess(std::string gladefile):gui(0),logId(0),chessInterface(0)
 
 	chessInterface = new ChessInterface();
 	chessInterface->startNewGame();
+	this->RedrawBoard(true);
 
 	//**********************************************************************************
 }
@@ -90,21 +91,111 @@ Chess::~Chess()
 
 /********Implement These*****************************/
 
+/*
+ * This function translates between defines.
+ */
+ImageName nameForTypeAndColor(ChessPieceType type, ChessColor color)
+{
+	ImageName name;
+	switch(type)
+	{
+		case ChessPieceTypePawn:
+			name = W_PAWN;
+			break;
+		case ChessPieceTypeRook:
+			name = W_ROOK;
+			break;
+		case ChessPieceTypeKnight:
+			name = W_KNIGHT;
+			break;
+		case ChessPieceTypeBishop:
+			name = W_BISHOP;
+			break;
+		case ChessPieceTypeKing:
+			name = W_KING;
+			break;
+		case ChessPieceTypeQueen:
+			name = W_QUEEN;
+			break;
+		case ChessPieceTypeNoPiece:
+			name = NO_IMAGE;
+	}
+	if (type != ChessPieceTypeNoPiece && color == ChessColorBlack)
+	{
+		name = (ImageName)((int)name + 1);
+	}
+	return name;
+}
 
+/*
+ * This private function is called whenver the underlying data
+ * has changed and the board needs to be redrawn.
+ * If fullRedraw is true, it will redraw the entire board.
+ * Otherwise, only the changed sections will be redrawn.
+ */
+void Chess::RedrawBoard(bool fullRedraw)
+{
+	// TODO implement this
+	// first, clear all highlights
+	// second, draw the given pieces
+	if (fullRedraw)
+	{
+		for (int row = 0; row < BOARD_NUM_ROWS; row++)
+		{
+			for (int column = 0; column < BOARD_NUM_COLS; column++)
+			{
+				// place the correct piece
+				ChessPieceType type = chessInterface->pieceAtLocation(row, column);
+				ChessColor color;
+				if (type != ChessPieceTypeNoPiece)
+				{
+					color = chessInterface->colorAtLocation(row, column);
+				}
+				ImageName piece = nameForTypeAndColor(type, color);
+				if (piece != NO_IMAGE)
+				{
+					gui->PlacePiece(row, column, piece);
+				}
+				else
+				{
+					gui->ClearPiece(row, column);
+				}
+			}
+		}
+	}
+	else
+	{
+		// just redraw the two changed squares
+	}
+}
+
+/*
+  Each square of the chess board is reffered to in the GUI code as a cell.
+This Function is called whenever the uses clicks and releases the mous button over
+a cell without initiating a drag. Row and Column coordinates begin in the top left corner.
+The button paramter tells which mouse button was clicked
+(1 for left, 2 for middle, 3 for right).
+You do not need to worry about wich button was used to complete the project.
+*/
 void Chess::on_CellSelected(int row, int col, int button)
 {
 	g_debug("Chess::on_CellSelected (%d,%d)",row,col);
-	/*
-	  Each square of the chess board is reffered to in the GUI code as a cell.
-	This Function is called whenever the uses clicks and releases the mous button over
-	a cell without initiating a drag. Row and Column coordinates begin in the top left corner.
-	The button paramter tells which mouse button was clicked
-	(1 for left, 2 for middle, 3 for right).
-	You do not need to worry about wich button was used to complete the project.
-	*/
+
 	if (cellSelected != NULL)
 	{
 		// a piece was previously selected. the new click is a move.
+		ChessPieceType piece = chessInterface->pieceAtLocation(cellSelected->row(), cellSelected->column());
+		if (chessInterface->movePiece(*cellSelected, Location(row, col)))
+		{
+			// move was allowed and went through
+			// TODO umm something
+		}
+		else
+		{
+			// move was not valid
+			// TODO show an error message
+		}
+		// TODO remove highlights
 		cellSelected = LocationPtr();
 	}
 	else
@@ -113,6 +204,7 @@ void Chess::on_CellSelected(int row, int col, int button)
 		if (chessInterface->pieceAtLocation(row, col) != ChessPieceTypeNoPiece)
 		{
 			// there's a piece there - highlight its moves
+			// TODO check that they are allowed to move this piece
 			cellSelected = LocationPtr(new Location(row, col));
 			set<Location> availableMoves = chessInterface->availableMovesFromSquare(row, col);
 			g_debug("got available moves");
