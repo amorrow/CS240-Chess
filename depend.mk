@@ -1,5 +1,5 @@
 obj/Board.o: src/Board.cpp inc/Board.h inc/Location.h inc/Piece.h \
-  inc/ChessDefinitions.h
+  inc/ChessDefinitions.h inc/Rook.h inc/Pawn.h
 obj/Chess.o: src/Chess.cpp lib/inc/SelectDialog.h \
   /usr/include/gtkmm-2.4/gtkmm/dialog.h /usr/include/glibmm-2.4/glibmm.h \
   /usr/lib/glibmm-2.4/include/glibmmconfig.h \
@@ -348,7 +348,7 @@ obj/Chess.o: src/Chess.cpp lib/inc/SelectDialog.h \
   /usr/include/gtkmm-2.4/gtkmm/eventbox.h \
   /usr/include/gtkmm-2.4/gtkmm/aspectframe.h \
   /usr/include/gtkmm-2.4/gtkmm/frame.h lib/inc/ChessGuiBoardCell.h \
-  inc/ChessInterface.h inc/Game.h inc/Location.h inc/Board.h inc/Piece.h \
+  inc/Location.h inc/ChessInterface.h inc/Game.h inc/Board.h inc/Piece.h \
   inc/ChessDefinitions.h inc/Move.h
 obj/ChessInterface.o: src/ChessInterface.cpp inc/ChessInterface.h \
   inc/Game.h inc/Location.h inc/Board.h inc/Piece.h \
@@ -702,14 +702,61 @@ obj/main.o: src/main.cpp /usr/include/gtkmm-2.4/gtkmm/main.h \
   /usr/include/gtkmm-2.4/gtkmm/scrolledwindow.h lib/inc/ChessGuiBoard.h \
   /usr/include/gtkmm-2.4/gtkmm/eventbox.h \
   /usr/include/gtkmm-2.4/gtkmm/aspectframe.h \
-  /usr/include/gtkmm-2.4/gtkmm/frame.h lib/inc/ChessGuiBoardCell.h
+  /usr/include/gtkmm-2.4/gtkmm/frame.h lib/inc/ChessGuiBoardCell.h \
+  inc/Location.h
 obj/Move.o: src/Move.cpp inc/Move.h inc/Piece.h inc/Location.h \
   inc/ChessDefinitions.h
+obj/Pawn.o: src/Pawn.cpp inc/Pawn.h inc/Piece.h inc/Location.h \
+  inc/ChessDefinitions.h /usr/include/glib-2.0/glib.h \
+  /usr/include/glib-2.0/glib/galloca.h \
+  /usr/include/glib-2.0/glib/gtypes.h \
+  /usr/lib/glib-2.0/include/glibconfig.h \
+  /usr/include/glib-2.0/glib/gmacros.h \
+  /usr/include/glib-2.0/glib/garray.h \
+  /usr/include/glib-2.0/glib/gasyncqueue.h \
+  /usr/include/glib-2.0/glib/gthread.h \
+  /usr/include/glib-2.0/glib/gerror.h /usr/include/glib-2.0/glib/gquark.h \
+  /usr/include/glib-2.0/glib/gutils.h \
+  /usr/include/glib-2.0/glib/gatomic.h \
+  /usr/include/glib-2.0/glib/gbacktrace.h \
+  /usr/include/glib-2.0/glib/gbase64.h \
+  /usr/include/glib-2.0/glib/gbookmarkfile.h \
+  /usr/include/glib-2.0/glib/gcache.h /usr/include/glib-2.0/glib/glist.h \
+  /usr/include/glib-2.0/glib/gmem.h /usr/include/glib-2.0/glib/gslice.h \
+  /usr/include/glib-2.0/glib/gchecksum.h \
+  /usr/include/glib-2.0/glib/gcompletion.h \
+  /usr/include/glib-2.0/glib/gconvert.h \
+  /usr/include/glib-2.0/glib/gdataset.h \
+  /usr/include/glib-2.0/glib/gdate.h /usr/include/glib-2.0/glib/gdir.h \
+  /usr/include/glib-2.0/glib/gfileutils.h \
+  /usr/include/glib-2.0/glib/ghash.h /usr/include/glib-2.0/glib/ghook.h \
+  /usr/include/glib-2.0/glib/giochannel.h \
+  /usr/include/glib-2.0/glib/gmain.h /usr/include/glib-2.0/glib/gslist.h \
+  /usr/include/glib-2.0/glib/gstring.h \
+  /usr/include/glib-2.0/glib/gunicode.h \
+  /usr/include/glib-2.0/glib/gkeyfile.h \
+  /usr/include/glib-2.0/glib/gmappedfile.h \
+  /usr/include/glib-2.0/glib/gmarkup.h \
+  /usr/include/glib-2.0/glib/gmessages.h \
+  /usr/include/glib-2.0/glib/gnode.h /usr/include/glib-2.0/glib/goption.h \
+  /usr/include/glib-2.0/glib/gpattern.h \
+  /usr/include/glib-2.0/glib/gprimes.h \
+  /usr/include/glib-2.0/glib/gqsort.h /usr/include/glib-2.0/glib/gqueue.h \
+  /usr/include/glib-2.0/glib/grand.h /usr/include/glib-2.0/glib/grel.h \
+  /usr/include/glib-2.0/glib/gregex.h \
+  /usr/include/glib-2.0/glib/gscanner.h \
+  /usr/include/glib-2.0/glib/gsequence.h \
+  /usr/include/glib-2.0/glib/gshell.h /usr/include/glib-2.0/glib/gspawn.h \
+  /usr/include/glib-2.0/glib/gstrfuncs.h \
+  /usr/include/glib-2.0/glib/gtestutils.h \
+  /usr/include/glib-2.0/glib/gthreadpool.h \
+  /usr/include/glib-2.0/glib/gtimer.h /usr/include/glib-2.0/glib/gtree.h \
+  /usr/include/glib-2.0/glib/gurifuncs.h
 obj/Piece.o: src/Piece.cpp inc/Piece.h inc/Location.h \
   inc/ChessDefinitions.h
 obj/Rook.o: src/Rook.cpp inc/Rook.h inc/Piece.h inc/Location.h \
-  inc/ChessDefinitions.h /usr/include/glib-2.0/glib.h \
-  /usr/include/glib-2.0/glib/galloca.h \
+  inc/ChessDefinitions.h inc/ChessDefinitions.h \
+  /usr/include/glib-2.0/glib.h /usr/include/glib-2.0/glib/galloca.h \
   /usr/include/glib-2.0/glib/gtypes.h \
   /usr/lib/glib-2.0/include/glibconfig.h \
   /usr/include/glib-2.0/glib/gmacros.h \

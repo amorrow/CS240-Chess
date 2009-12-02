@@ -160,6 +160,7 @@ void Chess::RedrawBoard(bool fullRedraw)
 				{
 					gui->ClearPiece(row, column);
 				}
+				gui->UnHighlightSquare(row, column);
 			}
 		}
 	}

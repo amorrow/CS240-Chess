@@ -1,3 +1,5 @@
 src/*.swp
 inc/*.swp
+lib/src/*.swp
+lib/inc/*.swp
 

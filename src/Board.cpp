@@ -6,6 +6,7 @@
 
 // Pieces
 #include "Rook.h"
+#include "Pawn.h"
 
 using namespace std;
 
@@ -104,6 +105,12 @@ void Board::placeDefaultPieces()
 	// TODO place pieces
 	PiecePtr ptr(new Rook(ChessColorWhite));
 	board[7][7] = ptr;
+	board[7][0] = ptr;
+	ptr = PiecePtr(new Pawn(ChessColorWhite));
+	for (int col = 0; col < BOARD_NUM_COLS; col++)
+	{
+		board[6][col] = ptr;
+	}
 }
 
 bool Board::stalemate()
