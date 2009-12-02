@@ -43,7 +43,15 @@ PiecePtr Board::at(Location loc)
 
 ChessPieceType Board::typeAt(Location loc)
 {
-	return this->at(loc)->type();
+	PiecePtr p = this->at(loc);
+	if (p != NULL)
+	{
+		return p->type();
+	}
+	else
+	{
+		return ChessPieceTypeNoPiece;
+	}
 }
 
 bool Board::hasPieceAt(Location loc)

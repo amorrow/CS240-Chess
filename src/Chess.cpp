@@ -65,7 +65,7 @@ Chess::Chess(std::string gladefile):gui(0),logId(0),chessInterface(0)
 	//set your init code here***********************************************************
 
 	chessInterface = new ChessInterface();
-
+	chessInterface->startNewGame();
 
 	//**********************************************************************************
 }
@@ -140,6 +140,7 @@ void Chess::on_NewGame()
 	/*
 	Called when someone selects 'New' from the toolbar, 'Game' menu, or presses 'Ctrl-N'.
 	*/
+	chessInterface->startNewGame();
 }
 
 void Chess::on_SaveGame()
