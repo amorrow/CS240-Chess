@@ -106,31 +106,45 @@ void Board::clear()
 void Board::placeDefaultPieces()
 {
 	this->clear();
-	// TODO finish placing pieces
 	PiecePtr ptr;
 	// Rooks
 	ptr = PiecePtr(new Rook(ChessColorWhite));
 	board[7][7] = ptr;
 	board[7][0] = ptr;
+	ptr = PiecePtr(new Rook(ChessColorBlack));
+	board[0][0] = ptr;
+	board[0][7] = ptr;
 	// Knights
 	ptr = PiecePtr(new Knight(ChessColorWhite));
 	board[7][6] = ptr;
 	board[7][1] = ptr;
+	ptr = PiecePtr(new Knight(ChessColorBlack));
+	board[0][6] = ptr;
+	board[0][1] = ptr;
 	// Bishops
 	ptr = PiecePtr(new Bishop(ChessColorWhite));
 	board[7][5] = ptr;
 	board[7][2] = ptr;
+	ptr = PiecePtr(new Bishop(ChessColorBlack));
+	board[0][5] = ptr;
+	board[0][2] = ptr;
 	// Queens
 	ptr = PiecePtr(new Queen(ChessColorWhite));
 	board[7][3] = ptr;
+	ptr = PiecePtr(new Queen(ChessColorBlack));
+	board[0][4] = ptr;
 	// Kings
 	ptr = PiecePtr(new King(ChessColorWhite));
 	board[7][4] = ptr;
+	ptr = PiecePtr(new King(ChessColorBlack));
+	board[0][3] = ptr;
 	// Pawns
 	ptr = PiecePtr(new Pawn(ChessColorWhite));
+	PiecePtr blackPawn(new Pawn(ChessColorBlack));
 	for (int col = 0; col < BOARD_NUM_COLS; col++)
 	{
 		board[6][col] = ptr;
+		board[1][col] = blackPawn;
 	}
 }
 
