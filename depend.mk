@@ -1,5 +1,8 @@
+obj/Bishop.o: src/Bishop.cpp inc/Bishop.h inc/Piece.h inc/Location.h \
+  inc/ChessDefinitions.h
 obj/Board.o: src/Board.cpp inc/Board.h inc/Location.h inc/Piece.h \
-  inc/ChessDefinitions.h inc/Rook.h inc/Pawn.h
+  inc/ChessDefinitions.h inc/Rook.h inc/Pawn.h inc/Knight.h inc/Bishop.h \
+  inc/Queen.h inc/King.h
 obj/Chess.o: src/Chess.cpp lib/inc/SelectDialog.h \
   /usr/include/gtkmm-2.4/gtkmm/dialog.h /usr/include/glibmm-2.4/glibmm.h \
   /usr/lib/glibmm-2.4/include/glibmmconfig.h \
@@ -355,6 +358,10 @@ obj/ChessInterface.o: src/ChessInterface.cpp inc/ChessInterface.h \
   inc/ChessDefinitions.h inc/Move.h inc/Location.h
 obj/Game.o: src/Game.cpp inc/Game.h inc/Location.h inc/Board.h \
   inc/Piece.h inc/ChessDefinitions.h inc/Move.h
+obj/King.o: src/King.cpp inc/King.h inc/Piece.h inc/Location.h \
+  inc/ChessDefinitions.h
+obj/Knight.o: src/Knight.cpp inc/Knight.h inc/Piece.h inc/Location.h \
+  inc/ChessDefinitions.h
 obj/Location.o: src/Location.cpp inc/Location.h
 obj/main.o: src/main.cpp /usr/include/gtkmm-2.4/gtkmm/main.h \
   /usr/include/glibmm-2.4/glibmm.h \
@@ -753,6 +760,8 @@ obj/Pawn.o: src/Pawn.cpp inc/Pawn.h inc/Piece.h inc/Location.h \
   /usr/include/glib-2.0/glib/gtimer.h /usr/include/glib-2.0/glib/gtree.h \
   /usr/include/glib-2.0/glib/gurifuncs.h
 obj/Piece.o: src/Piece.cpp inc/Piece.h inc/Location.h \
+  inc/ChessDefinitions.h
+obj/Queen.o: src/Queen.cpp inc/Queen.h inc/Piece.h inc/Location.h \
   inc/ChessDefinitions.h
 obj/Rook.o: src/Rook.cpp inc/Rook.h inc/Piece.h inc/Location.h \
   inc/ChessDefinitions.h inc/ChessDefinitions.h \

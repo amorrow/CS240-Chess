@@ -7,6 +7,10 @@
 // Pieces
 #include "Rook.h"
 #include "Pawn.h"
+#include "Knight.h"
+#include "Bishop.h"
+#include "Queen.h"
+#include "King.h"
 
 using namespace std;
 
@@ -102,10 +106,27 @@ void Board::clear()
 void Board::placeDefaultPieces()
 {
 	this->clear();
-	// TODO place pieces
-	PiecePtr ptr(new Rook(ChessColorWhite));
+	// TODO finish placing pieces
+	PiecePtr ptr;
+	// Rooks
+	ptr = PiecePtr(new Rook(ChessColorWhite));
 	board[7][7] = ptr;
 	board[7][0] = ptr;
+	// Knights
+	ptr = PiecePtr(new Knight(ChessColorWhite));
+	board[7][6] = ptr;
+	board[7][1] = ptr;
+	// Bishops
+	ptr = PiecePtr(new Bishop(ChessColorWhite));
+	board[7][5] = ptr;
+	board[7][2] = ptr;
+	// Queens
+	ptr = PiecePtr(new Queen(ChessColorWhite));
+	board[7][3] = ptr;
+	// Kings
+	ptr = PiecePtr(new King(ChessColorWhite));
+	board[7][4] = ptr;
+	// Pawns
 	ptr = PiecePtr(new Pawn(ChessColorWhite));
 	for (int col = 0; col < BOARD_NUM_COLS; col++)
 	{

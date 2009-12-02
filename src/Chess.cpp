@@ -135,9 +135,6 @@ ImageName nameForTypeAndColor(ChessPieceType type, ChessColor color)
  */
 void Chess::RedrawBoard(bool fullRedraw)
 {
-	// TODO implement this
-	// first, clear all highlights
-	// second, draw the given pieces
 	if (fullRedraw)
 	{
 		for (int row = 0; row < BOARD_NUM_ROWS; row++)
@@ -167,6 +164,7 @@ void Chess::RedrawBoard(bool fullRedraw)
 	else
 	{
 		// just redraw the two changed squares
+		// TODO implement this
 	}
 }
 
@@ -250,6 +248,7 @@ void Chess::on_NewGame()
 	Called when someone selects 'New' from the toolbar, 'Game' menu, or presses 'Ctrl-N'.
 	*/
 	chessInterface->startNewGame();
+	this->RedrawBoard(true);
 }
 
 void Chess::on_SaveGame()
