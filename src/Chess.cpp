@@ -184,7 +184,6 @@ void Chess::on_CellSelected(int row, int col, int button)
 	{
 		// a piece was previously selected. the new click is a move.
 		g_debug("trying to make a move...");
-		ChessPieceType piece = chessInterface->pieceAtLocation(cellSelected->row(), cellSelected->column());
 		if (chessInterface->movePiece(*cellSelected, Location(row, col)))
 		{
 			g_debug("Move worked!");
@@ -204,10 +203,9 @@ void Chess::on_CellSelected(int row, int col, int button)
 	else
 	{
 		// no piece previously selected. the new click is to select a piece.
-		if (chessInterface->pieceAtLocation(row, col) != ChessPieceTypeNoPiece)
+		if (chessInterface->maySelectPieceAtLocation(row, col))
 		{
 			// there's a piece there - highlight its moves
-			// TODO check that they are allowed to move this piece
 			cellSelected = LocationPtr(new Location(row, col));
 			set<Location> availableMoves = chessInterface->availableMovesFromSquare(row, col);
 			g_debug("got available moves");

@@ -26,7 +26,6 @@ private:
 	std::string _message;
 	
 	void clear();
-	bool belongsToCurrentPlayer(PiecePtr p);
 	void updateGameStatus();
 public:
 	// Both of the following throw exceptions on errors.
@@ -52,6 +51,10 @@ public:
 	// Returns a set of the locations of interest to allow whatever frontend
 	// we're using to redraw.
 	std::set<Location> locationsChangedByLastMove() const;
+
+	// Determines if the given piece belongs to the player whose
+	// turn it currently is.
+	bool belongsToCurrentPlayer(PiecePtr p);
 };
 
 #endif

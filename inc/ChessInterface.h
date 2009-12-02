@@ -50,6 +50,10 @@ public:
 	// Precondition: There is a piece at the location.
 	ChessColor colorAtLocation(int row, int col);
 	ChessColor colorAtLocation(Location loc);
+	// Indicates whether or not the current player may select
+	// a given piece.
+	bool maySelectPieceAtLocation(int row, int col);
+	bool maySelectPieceAtLocation(Location loc);
 };
 
 #endif

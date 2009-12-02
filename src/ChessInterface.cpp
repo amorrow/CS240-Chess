@@ -69,3 +69,13 @@ ChessColor ChessInterface::colorAtLocation(int row, int col)
 	return this->colorAtLocation(Location(row, col));
 }
 
+bool ChessInterface::maySelectPieceAtLocation(int row, int col)
+{
+	return this->maySelectPieceAtLocation(Location(row, col));
+}
+
+bool ChessInterface::maySelectPieceAtLocation(Location loc)
+{
+	return this->pieceAtLocation(loc) != ChessPieceTypeNoPiece && game.belongsToCurrentPlayer(game.board().at(loc));
+}
+
