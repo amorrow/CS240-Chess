@@ -107,6 +107,12 @@ void Chess::on_CellSelected(int row, int col, int button)
 		// there's a piece there - highlight its moves
 		set<Location> availableMoves = chessInterface->availableMovesFromSquare(row, col);
 		g_debug("got available moves");
+		set<Location>::const_iterator moveIter = availableMoves.begin();
+		while (moveIter != availableMoves.end())
+		{
+			gui->HighlightSquare(moveIter->row(), moveIter->column(), GREEN_SQUARE);
+			moveIter++;
+		}
 	}
 }
 
