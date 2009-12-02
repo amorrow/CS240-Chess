@@ -102,16 +102,26 @@ void Chess::on_CellSelected(int row, int col, int button)
 	(1 for left, 2 for middle, 3 for right).
 	You do not need to worry about wich button was used to complete the project.
 	*/
-	if (chessInterface->pieceAtLocation(row, col) != ChessPieceTypeNoPiece)
+	if (cellSelected != NULL)
 	{
-		// there's a piece there - highlight its moves
-		set<Location> availableMoves = chessInterface->availableMovesFromSquare(row, col);
-		g_debug("got available moves");
-		set<Location>::const_iterator moveIter = availableMoves.begin();
-		while (moveIter != availableMoves.end())
+		// a piece was previously selected. the new click is a move.
+		cellSelected = LocationPtr();
+	}
+	else
+	{
+		// no piece previously selected. the new click is to select a piece.
+		if (chessInterface->pieceAtLocation(row, col) != ChessPieceTypeNoPiece)
 		{
-			gui->HighlightSquare(moveIter->row(), moveIter->column(), GREEN_SQUARE);
-			moveIter++;
+			// there's a piece there - highlight its moves
+			cellSelected = LocationPtr(new Location(row, col));
+			set<Location> availableMoves = chessInterface->availableMovesFromSquare(row, col);
+			g_debug("got available moves");
+			set<Location>::const_iterator moveIter = availableMoves.begin();
+			while (moveIter != availableMoves.end())
+			{
+				gui->HighlightSquare(moveIter->row(), moveIter->column(), GREEN_SQUARE);
+				moveIter++;
+			}
 		}
 	}
 }

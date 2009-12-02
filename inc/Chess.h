@@ -41,6 +41,7 @@
 
 //add you defines here*****************************************************************************
 class ChessInterface;
+#include "Location.h"
 
 
 ///@brief This class is the main interface between the Students code and the provided GUI
@@ -65,6 +66,7 @@ class Chess
 		///@name Add your variables here
 		///@{
 		ChessInterface * chessInterface;
+		LocationPtr cellSelected;
 		///@}
 
 	public:

@@ -5,6 +5,8 @@
 #ifndef _CS240CHESS_LOCATION_H
 #define _CS240CHESS_LOCATION_H
 
+#include <boost/shared_ptr.hpp>
+
 class Location
 {
 	private:
@@ -18,6 +20,8 @@ class Location
 		int row() const;
 		int column() const;
 };
+
+typedef boost::shared_ptr<Location> LocationPtr;
 
 #endif
 
