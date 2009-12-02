@@ -5,7 +5,7 @@
 #include "Game.h"
 
 #include <string>
-#include <stack>
+#include <glib.h>
 
 using namespace std;
 
@@ -100,9 +100,11 @@ Board& Game::board()
 // False if the move requested cannot be performed.
 bool Game::makeMove(Location oldLoc, Location newLoc)
 {
+	g_debug("Game::makeMove starting with piece at %d,%d...",oldLoc.row(),oldLoc.column());
 	// determine if there is a piece at the specified location
 	if (!_board.hasPieceAt(oldLoc))
 	{
+		g_debug("Game::makeMove did not find a piece to move.");
 		return false;
 	}
 	PiecePtr pieceToMove = _board.at(oldLoc);
@@ -111,6 +113,7 @@ bool Game::makeMove(Location oldLoc, Location newLoc)
 	// check to see if it belongs to the right player
 	if (!belongsToCurrentPlayer(pieceToMove))
 	{
+		g_debug("Game::makeMove asked to move the other player's piece!");
 		return false;
 	}
 	// determine if the new location is a valid move
@@ -208,7 +211,10 @@ void Game::updateGameStatus()
 
 bool Game::belongsToCurrentPlayer(PiecePtr p)
 {
-	//TODO implement this
+	if (p->color() == ChessColorWhite && _status == ChessGameStatusWhitesTurn)
+		return true;
+	if (p->color() == ChessColorBlack && _status == ChessGameStatusBlacksTurn)
+		return true;
 	return false;
 }
 

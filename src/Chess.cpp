@@ -183,16 +183,20 @@ void Chess::on_CellSelected(int row, int col, int button)
 	if (cellSelected != NULL)
 	{
 		// a piece was previously selected. the new click is a move.
+		g_debug("trying to make a move...");
 		ChessPieceType piece = chessInterface->pieceAtLocation(cellSelected->row(), cellSelected->column());
 		if (chessInterface->movePiece(*cellSelected, Location(row, col)))
 		{
+			g_debug("Move worked!");
 			// move was allowed and went through
 			// TODO umm something
+			this->RedrawBoard(true);
 		}
 		else
 		{
 			// move was not valid
 			// TODO show an error message
+			g_debug("Move did not work!");
 		}
 		// TODO remove highlights
 		cellSelected = LocationPtr();
