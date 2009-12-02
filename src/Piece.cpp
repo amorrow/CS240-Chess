@@ -21,8 +21,3 @@ ChessColor Piece::color() const
 	return _color;
 }
 
-set<Location> Piece::validMoves(Location current) const
-{
-	return set<Location>();
-}
-

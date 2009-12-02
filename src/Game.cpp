@@ -114,7 +114,7 @@ bool Game::makeMove(Location oldLoc, Location newLoc)
 		return false;
 	}
 	// determine if the new location is a valid move
-	set<Location> valid = pieceToMove->validMoves(oldLoc);
+	set<Location> valid = pieceToMove->validMoves(oldLoc, _board);
 	set<Location>::iterator locIter = valid.find(newLoc);
 	if (locIter == valid.end()) // the suggested move was not found in the set of valid ones
 	{

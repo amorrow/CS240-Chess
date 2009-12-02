@@ -9,7 +9,7 @@ class Knight : public Piece
 {
 public:
 	Knight(ChessColor color);
-	virtual std::set<Location> validMoves(Location current) const;
+	virtual std::set<Location> validMoves(Location current, Board& board) const;
 };
 
 #endif

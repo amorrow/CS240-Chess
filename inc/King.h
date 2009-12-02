@@ -9,7 +9,7 @@ class King : public Piece
 {
 public:
 	King(ChessColor color);
-	virtual std::set<Location> validMoves(Location current) const;
+	virtual std::set<Location> validMoves(Location current, Board& board) const;
 };
 
 #endif

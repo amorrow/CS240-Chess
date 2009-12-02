@@ -12,6 +12,8 @@
 #include <set>
 #include <boost/shared_ptr.hpp>
 
+class Board;
+
 class Piece
 {
 private:
@@ -20,7 +22,7 @@ private:
 protected:
 	Piece(ChessPieceType type, ChessColor color);
 public:
-	virtual std::set<Location> validMoves(Location current) const;
+	virtual std::set<Location> validMoves(Location current, Board& board) const = 0;
 	ChessPieceType type() const;
 	ChessColor color() const;
 };

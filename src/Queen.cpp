@@ -7,7 +7,7 @@ using namespace std;
 Queen::Queen(ChessColor color) : Piece(ChessPieceTypeQueen, color)
 {}
 
-set<Location> Queen::validMoves(Location current) const
+set<Location> Queen::validMoves(Location current, Board& board) const
 {
 	set<Location> moves;
 	moves.insert(Location(3,3));

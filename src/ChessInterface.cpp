@@ -11,7 +11,7 @@ using namespace std;
 
 set<Location> ChessInterface::availableMovesFromSquare(Location loc)
 {
-	return game.board().at(loc)->validMoves(loc);
+	return game.board().at(loc)->validMoves(loc, game.board());
 }
 
 set<Location> ChessInterface::availableMovesFromSquare(int row, int col)
