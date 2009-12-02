@@ -167,6 +167,22 @@ void Chess::RedrawBoard(bool fullRedraw)
 		// TODO implement this
 	}
 	gui->SetTopLabel(chessInterface->message());
+	gui->SetBottomLabel("");
+}
+
+/*
+ * This private function is called to remove all the highlights from
+ * the board. It's a mite slow, I suppose. Who cares?
+ */
+void Chess::RemoveBoardHighlights()
+{
+	for (int row = 0; row < BOARD_NUM_ROWS; row++)
+	{
+		for (int col = 0; col < BOARD_NUM_COLS; col++)
+		{
+			gui->UnHighlightSquare(row, col);
+		}
+	}
 }
 
 /*
@@ -196,9 +212,10 @@ void Chess::on_CellSelected(int row, int col, int button)
 		{
 			// move was not valid
 			// TODO show an error message
+			gui->SetBottomLabel("Invalid move. Please choose a valid move.");
 			g_debug("Move did not work!");
 		}
-		// TODO remove highlights
+		this->RemoveBoardHighlights();
 		cellSelected = LocationPtr();
 	}
 	else
