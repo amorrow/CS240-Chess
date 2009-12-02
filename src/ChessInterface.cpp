@@ -11,7 +11,7 @@ using namespace std;
 
 set<Location> ChessInterface::availableMovesFromSquare(Location loc)
 {
-	return game.board().at(loc).validMoves();
+	return game.board().at(loc).validMoves(loc);
 }
 
 bool ChessInterface::movePiece(Location oldLoc, Location newLoc)

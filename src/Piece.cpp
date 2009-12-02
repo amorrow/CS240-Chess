@@ -16,7 +16,7 @@ ChessPieceType Piece::type() const
 	return _type;
 }
 
-set<Location> Piece::validMoves() const
+set<Location> Piece::validMoves(Location current) const
 {
 	return set<Location>();
 }
