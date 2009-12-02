@@ -105,7 +105,7 @@ bool Game::makeMove(Location oldLoc, Location newLoc)
 	{
 		return false;
 	}
-	Piece pieceToMove = _board.at(oldLoc);
+	PiecePtr pieceToMove = _board.at(oldLoc);
 	
 	Move move(pieceToMove, oldLoc, newLoc);
 	// check to see if it belongs to the right player
@@ -114,7 +114,7 @@ bool Game::makeMove(Location oldLoc, Location newLoc)
 		return false;
 	}
 	// determine if the new location is a valid move
-	set<Location> valid = pieceToMove.validMoves(oldLoc);
+	set<Location> valid = pieceToMove->validMoves(oldLoc);
 	set<Location>::iterator locIter = valid.find(newLoc);
 	if (locIter == valid.end()) // the suggested move was not found in the set of valid ones
 	{
@@ -123,7 +123,7 @@ bool Game::makeMove(Location oldLoc, Location newLoc)
 	// determine if there's a piece in the new location
 	if (_board.hasPieceAt(newLoc))
 	{
-		Piece pieceToTake = _board.at(newLoc);
+		PiecePtr pieceToTake = _board.at(newLoc);
 		if (belongsToCurrentPlayer(pieceToTake))
 		{
 			return false;
@@ -155,7 +155,7 @@ bool Game::undoMove()
 	_board.movePiece(last.newLocation(), last.oldLocation());
 	if (last.pieceTaken() != NULL)
 	{
-		_board.insertPiece(last.newLocation(), (*last.pieceTaken()));
+		_board.insertPiece(last.newLocation(), last.pieceTaken());
 	}
 	return true;
 }
@@ -206,7 +206,7 @@ void Game::updateGameStatus()
 	}
 }
 
-bool Game::belongsToCurrentPlayer(Piece p)
+bool Game::belongsToCurrentPlayer(PiecePtr p)
 {
 	//TODO implement this
 	return false;

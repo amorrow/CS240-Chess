@@ -11,22 +11,22 @@
 class Move
 {
 private:
-	Piece _piece;
+	PiecePtr _piece;
 	Location _oldLocation;
 	Location _newLocation;
-	Piece * _taken;
+	PiecePtr _taken;
 public:
 	Move();
 	~Move();
-	Move(Piece p, Location oldL, Location newL);
-	Move(Piece p, Location oldL, Location newL, Piece taken);
+	Move(PiecePtr p, Location oldL, Location newL);
+	Move(PiecePtr p, Location oldL, Location newL, PiecePtr taken);
 	
-	Piece piece() const;
+	PiecePtr piece() const;
 	Location oldLocation() const;
 	Location newLocation() const;
-	Piece* pieceTaken() const;
+	PiecePtr pieceTaken() const;
 	
-	void take(Piece p);
+	void take(PiecePtr p);
 };
 
 #endif

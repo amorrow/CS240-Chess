@@ -5,10 +5,10 @@
 
 #include "Piece.h"
 
-class Rook
+class Rook : public Piece
 {
 public:
-	Rook();
+	Rook(ChessColor color);
 	virtual std::set<Location> validMoves(Location current) const;
 };
 

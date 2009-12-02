@@ -13,19 +13,19 @@
 class Board
 {
 private:
-	Piece** board;
+	PiecePtr** board;
 public:
 	// Constructors & Destructors
 	Board();
 	~Board();
 	// Accessing & moving
-	Piece at(Location loc);
+	PiecePtr at(Location loc);
 	ChessPieceType typeAt(Location loc);
 	bool hasPieceAt(Location loc);
 	// Precondition: the specified move is valid
 	void movePiece(Location oldLoc, Location newLoc);
 	// Precondition: the specified space is empty
-	void insertPiece(Location loc, Piece p);
+	void insertPiece(Location loc, PiecePtr p);
 	
 	// Removes all the current pieces.
 	void clear();

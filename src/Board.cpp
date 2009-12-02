@@ -4,14 +4,17 @@
 
 #include "Board.h"
 
+// Pieces
+#include "Rook.h"
+
 using namespace std;
 
 Board::Board() : board(NULL)
 {
-	board = new Piece*[BOARD_NUM_ROWS];
+	board = new PiecePtr*[BOARD_NUM_ROWS];
 	for (int i = 0; i < BOARD_NUM_ROWS; i++)
 	{
-		board[i] = new Piece[BOARD_NUM_COLS];
+		board[i] = new PiecePtr[BOARD_NUM_COLS];
 	}
 }
 
@@ -25,7 +28,7 @@ Board::~Board()
 	delete [] board;
 }
 
-Piece Board::at(Location loc)
+PiecePtr Board::at(Location loc)
 {
 	if (loc.isValid())
 	{
@@ -33,13 +36,14 @@ Piece Board::at(Location loc)
 	}
 	else
 	{
-		return Piece();
+		PiecePtr ptr;
+		return ptr;
 	}
 }
 
 ChessPieceType Board::typeAt(Location loc)
 {
-	return this->at(loc).type();
+	return this->at(loc)->type();
 }
 
 bool Board::hasPieceAt(Location loc)
@@ -56,14 +60,14 @@ bool Board::hasPieceAt(Location loc)
 
 void Board::movePiece(Location oldLoc, Location newLoc)
 {
-	Piece toMove = this->at(oldLoc);
-	Piece blank;
+	PiecePtr toMove = this->at(oldLoc);
+	PiecePtr blank;
 
 	board[newLoc.row()][newLoc.column()] = toMove;
 	board[oldLoc.row()][oldLoc.column()] = blank;
 }
 
-void Board::insertPiece(Location loc, Piece p)
+void Board::insertPiece(Location loc, PiecePtr p)
 {
 	board[loc.row()][loc.column()] = p;
 }
@@ -74,7 +78,8 @@ void Board::clear()
 	{
 		for (int col = 0; col < BOARD_NUM_COLS; col++)
 		{
-			board[row][col] = Piece();
+			PiecePtr ptr;
+			board[row][col] = ptr;
 		}
 	}
 }
@@ -83,6 +88,8 @@ void Board::placeDefaultPieces()
 {
 	this->clear();
 	// TODO place pieces
+	PiecePtr ptr(new Rook(ChessColorWhite));
+	board[0][0] = ptr;
 }
 
 bool Board::stalemate()

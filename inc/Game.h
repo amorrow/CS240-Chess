@@ -26,7 +26,7 @@ private:
 	std::string _message;
 	
 	void clear();
-	bool belongsToCurrentPlayer(Piece p);
+	bool belongsToCurrentPlayer(PiecePtr p);
 	void updateGameStatus();
 public:
 	// Both of the following throw exceptions on errors.

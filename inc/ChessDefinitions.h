@@ -16,20 +16,20 @@ typedef enum
 
 typedef enum
 {
-	ChessPieceTypeWhitePawn,
-	ChessPieceTypeWhiteRook,
-	ChessPieceTypeWhiteKnight,
-	ChessPieceTypeWhiteBishop,
-	ChessPieceTypeWhiteQueen,
-	ChessPieceTypeWhiteKing,
-	ChessPieceTypeBlackPawn,
-	ChessPieceTypeBlackRook,
-	ChessPieceTypeBlackKnight,
-	ChessPieceTypeBlackBishop,
-	ChessPieceTypeBlackQueen,
-	ChessPieceTypeBlackKing,
+	ChessPieceTypePawn,
+	ChessPieceTypeRook,
+	ChessPieceTypeKnight,
+	ChessPieceTypeBishop,
+	ChessPieceTypeQueen,
+	ChessPieceTypeKing,
 	ChessPieceTypeNoPiece,
 } ChessPieceType;
+
+typedef enum
+{
+	ChessColorWhite,
+	ChessColorBlack,
+} ChessColor;
 
 #define BOARD_NUM_ROWS 8
 #define BOARD_NUM_COLS 8

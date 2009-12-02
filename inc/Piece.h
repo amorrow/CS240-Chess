@@ -10,16 +10,22 @@
 #include "Location.h"
 #include "ChessDefinitions.h"
 #include <set>
+#include <boost/shared_ptr.hpp>
 
 class Piece
 {
 private:
 	ChessPieceType _type;
+	ChessColor _color;
+protected:
+	Piece(ChessPieceType type, ChessColor color);
 public:
-	Piece(); // creates a NoPiece type piece
 	virtual std::set<Location> validMoves(Location current) const;
 	ChessPieceType type() const;
+	ChessColor color() const;
 };
+
+typedef boost::shared_ptr<Piece> PiecePtr;
 
 #endif
 

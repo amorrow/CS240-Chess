@@ -4,25 +4,20 @@
 
 #include "Move.h"
 
-Move::Move() : _taken(NULL)
+Move::Move()
 {}
 
 Move::~Move()
 {
-	if (_taken != NULL)
-	{
-		delete _taken;
-		_taken = NULL;
-	}
 }
 
-Move::Move(Piece p, Location oldL, Location newL) : _piece(p), _oldLocation(oldL), _newLocation(newL), _taken(NULL)
+Move::Move(PiecePtr p, Location oldL, Location newL) : _piece(p), _oldLocation(oldL), _newLocation(newL)
 {}
 
-Move::Move(Piece p, Location oldL, Location newL, Piece taken) : _piece(p), _oldLocation(oldL), _newLocation(newL), _taken(new Piece(taken))
+Move::Move(PiecePtr p, Location oldL, Location newL, PiecePtr taken) : _piece(p), _oldLocation(oldL), _newLocation(newL), _taken(taken)
 {}
 
-Piece Move::piece() const
+PiecePtr Move::piece() const
 {
 	return _piece;
 }
@@ -37,13 +32,13 @@ Location Move::newLocation() const
 	return _newLocation;
 }
 
-Piece* Move::pieceTaken() const
+PiecePtr Move::pieceTaken() const
 {
 	return _taken;
 }
 
-void Move::take(Piece p)
+void Move::take(PiecePtr p)
 {
-	_taken = new Piece(p);
+	_taken = p;
 }
 

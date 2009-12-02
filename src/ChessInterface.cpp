@@ -11,7 +11,12 @@ using namespace std;
 
 set<Location> ChessInterface::availableMovesFromSquare(Location loc)
 {
-	return game.board().at(loc).validMoves(loc);
+	return game.board().at(loc)->validMoves(loc);
+}
+
+set<Location> ChessInterface::availableMovesFromSquare(int row, int col)
+{
+	return this->availableMovesFromSquare(Location(row, col));
 }
 
 bool ChessInterface::movePiece(Location oldLoc, Location newLoc)
@@ -48,3 +53,9 @@ ChessPieceType ChessInterface::pieceAtLocation(Location loc)
 {
 	return game.board().typeAt(loc);
 }
+
+ChessPieceType ChessInterface::pieceAtLocation(int row, int col)
+{
+	return this->pieceAtLocation(Location(row, col));
+}
+

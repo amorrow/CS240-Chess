@@ -11,6 +11,8 @@
 #include "Chess.h"
 #include "ChessInterface.h"
 
+using namespace std;
+
 
 Chess::Chess(std::string gladefile):gui(0),logId(0),chessInterface(0)
 {
@@ -100,6 +102,12 @@ void Chess::on_CellSelected(int row, int col, int button)
 	(1 for left, 2 for middle, 3 for right).
 	You do not need to worry about wich button was used to complete the project.
 	*/
+	if (chessInterface->pieceAtLocation(row, col) != ChessPieceTypeNoPiece)
+	{
+		// there's a piece there - highlight its moves
+		set<Location> availableMoves = chessInterface->availableMovesFromSquare(row, col);
+		g_debug("got available moves");
+	}
 }
 
 void Chess::on_DragStart(int row,int col)
