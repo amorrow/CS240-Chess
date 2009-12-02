@@ -166,6 +166,7 @@ void Chess::RedrawBoard(bool fullRedraw)
 		// just redraw the two changed squares
 		// TODO implement this
 	}
+	gui->SetTopLabel(chessInterface->message());
 }
 
 /*
@@ -215,6 +216,8 @@ void Chess::on_CellSelected(int row, int col, int button)
 				gui->HighlightSquare(moveIter->row(), moveIter->column(), GREEN_SQUARE);
 				moveIter++;
 			}
+			// highlight the selected square, too
+			gui->HighlightSquare(row, col, RED_SQUARE);
 		}
 		else
 		{
@@ -286,6 +289,15 @@ void Chess::on_UndoMove()
 	/*
 	Called when someone selects 'Undo' from the toolbar, 'Game' menu, or presses 'Ctrl-Z'.
 	*/
+	if(chessInterface->undoMove())
+	{
+		this->RedrawBoard(true);
+	}
+	else
+	{
+		// TODO show a message stating there was
+		// nothing left to undo
+	}
 }
 
 

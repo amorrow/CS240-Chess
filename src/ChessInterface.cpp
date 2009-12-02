@@ -79,3 +79,8 @@ bool ChessInterface::maySelectPieceAtLocation(Location loc)
 	return this->pieceAtLocation(loc) != ChessPieceTypeNoPiece && game.belongsToCurrentPlayer(game.board().at(loc));
 }
 
+string ChessInterface::message()
+{
+	return game.message();
+}
+

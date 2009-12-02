@@ -152,6 +152,7 @@ bool Game::makeMove(Location oldLoc, Location newLoc)
 // Returns false if there are no more moves to undo.
 bool Game::undoMove()
 {
+	// TODO update game status
 	if (_history.empty())
 	{
 		return false;
@@ -197,6 +198,7 @@ void Game::updateGameStatus()
 		else
 		{
 			_status = ChessGameStatusBlacksTurn;
+			_message = ChessStatusMessageBlacksTurn;
 		}
 	}
 	else
@@ -208,6 +210,7 @@ void Game::updateGameStatus()
 		else
 		{
 			_status = ChessGameStatusWhitesTurn;
+			_message = ChessStatusMessageWhitesTurn;
 		}
 	}
 }
