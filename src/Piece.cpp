@@ -5,6 +5,7 @@
  */
 
 #include "Piece.h"
+#include "Board.h"
 
 using namespace std;
 
@@ -19,5 +20,23 @@ ChessPieceType Piece::type() const
 ChessColor Piece::color() const
 {
 	return _color;
+}
+
+void Piece::checkAndAddLocation(Location& loc, Board& board, set<Location>& moveSet) const
+{
+	if (!loc.isValid())
+		return;
+	if (board.at(loc) != NULL)
+	{
+		if (board.at(loc)->color() != this->color())
+		{
+			// enemy piece
+			moveSet.insert(loc);
+		}
+	}
+	else
+	{
+		moveSet.insert(loc);
+	}
 }
 

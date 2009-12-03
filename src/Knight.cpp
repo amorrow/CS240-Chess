@@ -5,24 +5,6 @@
 
 using namespace std;
 
-void Knight::checkAndAddLocation(Location& loc, Board& board, set<Location>& moveSet) const
-{
-	if (!loc.isValid())
-		return;
-	if (board.at(loc) != NULL)
-	{
-		if (board.at(loc)->color() != this->color())
-		{
-			// enemy piece
-			moveSet.insert(loc);
-		}
-	}
-	else
-	{
-		moveSet.insert(loc);
-	}
-}
-
 Knight::Knight(ChessColor color) : Piece(ChessPieceTypeKnight, color)
 {}
 

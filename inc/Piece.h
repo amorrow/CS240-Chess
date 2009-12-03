@@ -21,6 +21,9 @@ private:
 	ChessColor _color;
 protected:
 	Piece(ChessPieceType type, ChessColor color);
+	// Checks if the piece may move to the given location. If so, adds it to
+	// the given set.
+	void checkAndAddLocation(Location& loc, Board& board, std::set<Location>& moveSet) const;
 public:
 	virtual std::set<Location> validMoves(Location current, Board& board) const = 0;
 	ChessPieceType type() const;

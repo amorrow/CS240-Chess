@@ -804,7 +804,7 @@ obj/Pawn.o: src/Pawn.cpp inc/Pawn.h inc/Piece.h inc/Location.h \
   /usr/include/glib-2.0/glib/gtimer.h /usr/include/glib-2.0/glib/gtree.h \
   /usr/include/glib-2.0/glib/gurifuncs.h
 obj/Piece.o: src/Piece.cpp inc/Piece.h inc/Location.h \
-  inc/ChessDefinitions.h
+  inc/ChessDefinitions.h inc/Board.h inc/Piece.h
 obj/Queen.o: src/Queen.cpp inc/Queen.h inc/Rook.h inc/Piece.h \
   inc/Location.h inc/ChessDefinitions.h inc/Bishop.h
 obj/Rook.o: src/Rook.cpp inc/Rook.h inc/Piece.h inc/Location.h \

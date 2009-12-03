@@ -10,7 +10,22 @@ King::King(ChessColor color) : Piece(ChessPieceTypeKing, color)
 set<Location> King::validMoves(Location current, Board& board) const
 {
 	set<Location> moves;
-	moves.insert(Location(4,4));
+	Location next(current.row() - 1, current.column());
+	checkAndAddLocation(next, board, moves);
+	next = Location(current.row() - 1, current.column() - 1);
+	checkAndAddLocation(next, board, moves);
+	next = Location(current.row(), current.column() - 1);
+	checkAndAddLocation(next, board, moves);
+	next = Location(current.row() + 1, current.column() - 1);
+	checkAndAddLocation(next, board, moves);
+	next = Location(current.row() + 1, current.column());
+	checkAndAddLocation(next, board, moves);
+	next = Location(current.row() + 1, current.column() + 1);
+	checkAndAddLocation(next, board, moves);
+	next = Location(current.row(), current.column() + 1);
+	checkAndAddLocation(next, board, moves);
+	next = Location(current.row() - 1, current.column() + 1);
+	checkAndAddLocation(next, board, moves);
 	return moves;
 }
 
