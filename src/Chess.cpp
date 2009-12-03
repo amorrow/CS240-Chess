@@ -271,6 +271,7 @@ void Chess::on_NewGame()
 	Called when someone selects 'New' from the toolbar, 'Game' menu, or presses 'Ctrl-N'.
 	*/
 	chessInterface->startNewGame();
+	gui->SetStatusBar("Started new game...");
 	this->RedrawBoard(true);
 }
 
@@ -300,6 +301,7 @@ void Chess::on_LoadGame()
 	{
 		chessInterface->loadGame(filename);
 		gui->SetStatusBar("Loaded game...");
+		this->RedrawBoard(true);
 	}
 }
 

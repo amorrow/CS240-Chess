@@ -30,10 +30,18 @@ void Game::load(string path)
 	ParseContext context(parser);
 	ifstream inFile(path.c_str());
 	char buffer[1024];
-	while (!inFile.eof())
+	try
 	{
-		inFile.read(buffer, 1024);
-		context.parse(buffer, buffer + inFile.gcount());
+		while (!inFile.eof())
+		{
+			inFile.read(buffer, 1024);
+			context.parse(buffer, buffer + inFile.gcount());
+		}
+	}
+	catch (Glib::Error& err)
+	{
+		g_warning("Could not open file!");
+		g_warning("Message: %s", err.what().c_str());
 	}
 	/*
 	clear();

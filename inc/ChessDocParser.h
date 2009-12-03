@@ -12,10 +12,20 @@
 using namespace Glib;
 using namespace Glib::Markup;
 
+typedef enum
+{
+	StartState,
+	InChessGameState,
+	InBoardState,
+	InHistoryState,
+	InMoveState
+} ChessDocParserState;
+
 class ChessDocParser : public Parser
 {
 private:
 	Game& game;
+	ChessDocParserState state;
 protected:
 	virtual void on_error(ParseContext& context, const MarkupError& error);
 	virtual void on_start_element(ParseContext& context, const Glib::ustring& element_name, const AttributeMap& attributes);
