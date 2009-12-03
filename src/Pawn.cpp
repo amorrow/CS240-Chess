@@ -23,7 +23,7 @@ set<Location> Pawn::validMoves(Location current, Board& board) const
 		spacesToMove = 1;
 	}
 	Location next(current.row()+spacesToMove, current.column());
-	if (next.isValid())
+	if (next.isValid() && board.at(next) == NULL)
 	{
 		moves.insert(next);
 	}
