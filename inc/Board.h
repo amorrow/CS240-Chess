@@ -24,8 +24,8 @@ public:
 	bool hasPieceAt(Location loc);
 	// Returns a NULL pointer if the piece was not found.
 	LocationPtr findPiece(ChessPieceType type, ChessColor color);
-	// Rather slow; probably shouldn't be used unless you're actually
-	// trying to escape check.
+	// All moves that can be made from the given square without
+	// moving into check or remaining in check.
 	std::set<Location> movesToEscapeCheck(Location toMove);
 	// Precondition: the specified move is valid
 	void movePiece(Location oldLoc, Location newLoc);

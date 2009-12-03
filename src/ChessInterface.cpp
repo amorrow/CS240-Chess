@@ -11,10 +11,7 @@ using namespace std;
 
 set<Location> ChessInterface::availableMovesFromSquare(Location loc)
 {
-	if (game.currentPlayerInCheck())
-		return game.board().movesToEscapeCheck(loc);
-	else
-		return game.board().at(loc)->validMoves(loc, game.board());
+	return game.board().movesToEscapeCheck(loc);
 }
 
 set<Location> ChessInterface::availableMovesFromSquare(int row, int col)
