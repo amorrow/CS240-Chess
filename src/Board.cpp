@@ -150,9 +150,41 @@ void Board::placeDefaultPieces()
 	}
 }
 
+// Strategy: Check every piece to see if it has a move. If either player
+// does not have any moves for either of their pieces, it's stalemate.
 bool Board::stalemate()
 {
-	return false;
+	bool haveSeenBlackMove = false;
+	bool haveSeenWhiteMove = false;
+	for (int row = 0; row < BOARD_NUM_ROWS; row++)
+	{
+		for (int col = 0; col < BOARD_NUM_COLS; col++)
+		{
+			if (at(Location(row, col)) == NULL)
+			{
+				continue;
+			}
+
+			set<Location> moves = movesToEscapeCheck(Location(row, col));
+			if (moves.size() > 0)
+			{
+				if (at(Location(row, col))->color() == ChessColorBlack)
+				{
+					haveSeenBlackMove = true;
+				}
+				else
+				{
+					haveSeenWhiteMove = true;
+				}
+
+				if (haveSeenBlackMove && haveSeenWhiteMove)
+				{
+					return false;
+				}
+			}
+		}
+	}
+	return true;
 }
 
 bool Board::whiteInCheck()

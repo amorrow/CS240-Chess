@@ -16,6 +16,7 @@ string ChessStatusMessageWhiteInCheck = "White's Turn (In Check)";
 string ChessStatusMessageBlackInCheck = "Black's Turn (In Check)";
 string ChessStatusMessageWhiteWins = "Black In Checkmate (White Wins)";
 string ChessStatusMessageBlackWins = "White In Checkmate (Black Wins)";
+string ChessStatusMessageStalemate = "Stalemate!";
 
 // Using pseudo-code, since I don't yet know the API of the XML library
 // I'm planning to use.
@@ -193,6 +194,7 @@ void Game::updateGameStatus()
 	if (_board.stalemate())
 	{
 		_status = ChessGameStatusStalemate;
+		_message = ChessStatusMessageStalemate;
 	}
 	// flip whose turn it is
 	else if (_status == ChessGameStatusWhitesTurn)
