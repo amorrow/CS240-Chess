@@ -154,7 +154,6 @@ bool Game::makeMove(Location oldLoc, Location newLoc)
 // Returns false if there are no more moves to undo.
 bool Game::undoMove()
 {
-	// TODO update game status
 	if (_history.empty())
 	{
 		return false;
@@ -166,6 +165,9 @@ bool Game::undoMove()
 	{
 		_board.insertPiece(last.newLocation(), last.pieceTaken());
 	}
+	// This ought to work. Frankly, I'm not completely positive,
+	// but it seems to function properly. Check here for bugs, though.
+	updateGameStatus();
 	return true;
 }
 
