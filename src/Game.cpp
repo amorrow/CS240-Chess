@@ -3,8 +3,10 @@
  */
 
 #include "Game.h"
+#include "ChessDocParser.h"
 
 #include <string>
+#include <fstream>
 #include <glib.h>
 
 using namespace std;
@@ -22,6 +24,17 @@ string ChessStatusMessageStalemate = "Stalemate!";
 // I'm planning to use.
 void Game::load(string path)
 {
+	clear();
+
+	ChessDocParser parser(*this);
+	ParseContext context(parser);
+	ifstream inFile(path.c_str());
+	char buffer[1024];
+	while (!inFile.eof())
+	{
+		inFile.read(buffer, 1024);
+		context.parse(buffer, buffer + inFile.gcount());
+	}
 	/*
 	clear();
 	xmldoc doc(path);

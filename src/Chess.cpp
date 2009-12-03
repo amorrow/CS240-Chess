@@ -205,13 +205,11 @@ void Chess::on_CellSelected(int row, int col, int button)
 		{
 			g_debug("Move worked!");
 			// move was allowed and went through
-			// TODO umm something
 			this->RedrawBoard(true);
 		}
 		else
 		{
 			// move was not valid
-			// TODO show an error message
 			gui->SetBottomLabel("Invalid move. Please choose a valid move.");
 			g_debug("Move did not work!");
 		}
@@ -226,7 +224,6 @@ void Chess::on_CellSelected(int row, int col, int button)
 			// there's a piece there - highlight its moves
 			cellSelected = LocationPtr(new Location(row, col));
 			set<Location> availableMoves = chessInterface->availableMovesFromSquare(row, col);
-			g_debug("got available moves");
 			set<Location>::const_iterator moveIter = availableMoves.begin();
 			while (moveIter != availableMoves.end())
 			{
@@ -238,7 +235,7 @@ void Chess::on_CellSelected(int row, int col, int button)
 		}
 		else
 		{
-			// TODO not allowed to move that. show a message
+			gui->SetBottomLabel("Please select one of your pieces.");
 		}
 	}
 }
@@ -298,6 +295,12 @@ void Chess::on_LoadGame()
 	/*
 	Called when someone selects 'Open' from the toolbar, 'Game' menu, or presses 'Ctrl-O'.
 	*/
+	string filename = gui->SelectLoadFile();
+	if (filename != "")
+	{
+		chessInterface->loadGame(filename);
+		gui->SetStatusBar("Loaded game...");
+	}
 }
 
 void Chess::on_UndoMove()
@@ -312,8 +315,7 @@ void Chess::on_UndoMove()
 	}
 	else
 	{
-		// TODO show a message stating there was
-		// nothing left to undo
+		gui->SetBottomLabel("No more moves to undo.");
 	}
 }
 

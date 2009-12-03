@@ -3,9 +3,7 @@
 #include "ChessDocParser.h"
 #include <glib.h>
 
-using namespace std;
-
-ChessDocParser::ChessDocParser(string filename) : Parser()
+ChessDocParser::ChessDocParser(Game& _game) : Parser(), game(_game)
 {}
 
 void ChessDocParser::on_error(ParseContext& context, const MarkupError& error)

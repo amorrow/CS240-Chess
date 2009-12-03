@@ -442,8 +442,10 @@ obj/ChessDocParser.o: src/ChessDocParser.cpp inc/ChessDocParser.h \
   /usr/include/sigc++-2.0/sigc++/adaptors/lambda/select.h \
   /usr/include/sigc++-2.0/sigc++/adaptors/lambda/operator.h \
   /usr/include/sigc++-2.0/sigc++/adaptors/lambda/group.h \
-  /usr/include/sigc++-2.0/sigc++/functors/functors.h \
-  /usr/include/glib-2.0/glib.h /usr/include/glib-2.0/glib/galloca.h \
+  /usr/include/sigc++-2.0/sigc++/functors/functors.h inc/Game.h \
+  inc/Location.h inc/Board.h inc/Piece.h inc/ChessDefinitions.h \
+  inc/Move.h /usr/include/glib-2.0/glib.h \
+  /usr/include/glib-2.0/glib/galloca.h \
   /usr/include/glib-2.0/glib/garray.h \
   /usr/include/glib-2.0/glib/gasyncqueue.h \
   /usr/include/glib-2.0/glib/gthread.h \
@@ -485,15 +487,55 @@ obj/ChessInterface.o: src/ChessInterface.cpp inc/ChessInterface.h \
   inc/Game.h inc/Location.h inc/Board.h inc/Piece.h \
   inc/ChessDefinitions.h inc/Move.h inc/Location.h
 obj/Game.o: src/Game.cpp inc/Game.h inc/Location.h inc/Board.h \
-  inc/Piece.h inc/ChessDefinitions.h inc/Move.h \
-  /usr/include/glib-2.0/glib.h /usr/include/glib-2.0/glib/galloca.h \
-  /usr/include/glib-2.0/glib/gtypes.h \
+  inc/Piece.h inc/ChessDefinitions.h inc/Move.h inc/ChessDocParser.h \
+  /usr/include/glibmm-2.4/glibmm/markup.h \
+  /usr/include/glibmm-2.4/glibmm/error.h \
+  /usr/include/glib-2.0/glib/gquark.h /usr/include/glib-2.0/glib/gtypes.h \
   /usr/lib/glib-2.0/include/glibconfig.h \
   /usr/include/glib-2.0/glib/gmacros.h \
+  /usr/include/glibmm-2.4/glibmm/exception.h \
+  /usr/include/glibmm-2.4/glibmm/ustring.h \
+  /usr/include/glib-2.0/glib/gunicode.h \
+  /usr/include/glib-2.0/glib/gerror.h \
+  /usr/include/glibmm-2.4/glibmm/unicode.h \
+  /usr/include/glib-2.0/glib/gstrfuncs.h \
+  /usr/lib/glibmm-2.4/include/glibmmconfig.h \
+  /usr/include/sigc++-2.0/sigc++/sigc++.h \
+  /usr/include/sigc++-2.0/sigc++/signal.h \
+  /usr/include/sigc++-2.0/sigc++/signal_base.h \
+  /usr/lib/sigc++-2.0/include/sigc++config.h \
+  /usr/include/sigc++-2.0/sigc++/type_traits.h \
+  /usr/include/sigc++-2.0/sigc++/trackable.h \
+  /usr/include/sigc++-2.0/sigc++/functors/slot.h \
+  /usr/include/sigc++-2.0/sigc++/visit_each.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/adaptor_trait.h \
+  /usr/include/sigc++-2.0/sigc++/functors/functor_trait.h \
+  /usr/include/sigc++-2.0/sigc++/functors/ptr_fun.h \
+  /usr/include/sigc++-2.0/sigc++/functors/mem_fun.h \
+  /usr/include/sigc++-2.0/sigc++/limit_reference.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/deduce_result_type.h \
+  /usr/include/sigc++-2.0/sigc++/functors/slot_base.h \
+  /usr/include/sigc++-2.0/sigc++/connection.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/adaptors.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/bind.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/bound_argument.h \
+  /usr/include/sigc++-2.0/sigc++/reference_wrapper.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/bind_return.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/hide.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/retype_return.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/retype.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/compose.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/exception_catch.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/lambda/lambda.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/lambda/base.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/lambda/select.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/lambda/operator.h \
+  /usr/include/sigc++-2.0/sigc++/adaptors/lambda/group.h \
+  /usr/include/sigc++-2.0/sigc++/functors/functors.h inc/Game.h \
+  /usr/include/glib-2.0/glib.h /usr/include/glib-2.0/glib/galloca.h \
   /usr/include/glib-2.0/glib/garray.h \
   /usr/include/glib-2.0/glib/gasyncqueue.h \
   /usr/include/glib-2.0/glib/gthread.h \
-  /usr/include/glib-2.0/glib/gerror.h /usr/include/glib-2.0/glib/gquark.h \
   /usr/include/glib-2.0/glib/gutils.h \
   /usr/include/glib-2.0/glib/gatomic.h \
   /usr/include/glib-2.0/glib/gbacktrace.h \
@@ -511,7 +553,6 @@ obj/Game.o: src/Game.cpp inc/Game.h inc/Location.h inc/Board.h \
   /usr/include/glib-2.0/glib/giochannel.h \
   /usr/include/glib-2.0/glib/gmain.h /usr/include/glib-2.0/glib/gslist.h \
   /usr/include/glib-2.0/glib/gstring.h \
-  /usr/include/glib-2.0/glib/gunicode.h \
   /usr/include/glib-2.0/glib/gkeyfile.h \
   /usr/include/glib-2.0/glib/gmappedfile.h \
   /usr/include/glib-2.0/glib/gmarkup.h \
@@ -525,7 +566,6 @@ obj/Game.o: src/Game.cpp inc/Game.h inc/Location.h inc/Board.h \
   /usr/include/glib-2.0/glib/gscanner.h \
   /usr/include/glib-2.0/glib/gsequence.h \
   /usr/include/glib-2.0/glib/gshell.h /usr/include/glib-2.0/glib/gspawn.h \
-  /usr/include/glib-2.0/glib/gstrfuncs.h \
   /usr/include/glib-2.0/glib/gtestutils.h \
   /usr/include/glib-2.0/glib/gthreadpool.h \
   /usr/include/glib-2.0/glib/gtimer.h /usr/include/glib-2.0/glib/gtree.h \
