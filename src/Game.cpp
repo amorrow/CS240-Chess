@@ -121,7 +121,15 @@ bool Game::makeMove(Location oldLoc, Location newLoc)
 		return false;
 	}
 	// determine if the new location is a valid move
-	set<Location> valid = pieceToMove->validMoves(oldLoc, _board);
+	set<Location> valid;
+	if (_board.playerInCheck(pieceToMove->color()))
+	{
+		valid = _board.movesToEscapeCheck(oldLoc);
+	}
+	else
+	{
+		valid = pieceToMove->validMoves(oldLoc, _board);
+	}
 	set<Location>::iterator locIter = valid.find(newLoc);
 	if (locIter == valid.end()) // the suggested move was not found in the set of valid ones
 	{
@@ -236,5 +244,10 @@ bool Game::belongsToCurrentPlayer(PiecePtr p)
 	if (p->color() == ChessColorBlack && _status == ChessGameStatusBlacksTurn)
 		return true;
 	return false;
+}
+
+bool Game::currentPlayerInCheck()
+{
+	return _board.playerInCheck((_status == ChessGameStatusWhitesTurn ? ChessColorWhite : ChessColorBlack));
 }
 

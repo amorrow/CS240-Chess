@@ -13,9 +13,6 @@ class Board
 {
 private:
 	PiecePtr** board;
-	bool playerInCheck(ChessColor color);
-	bool playerInCheckmate(ChessColor color);
-	std::set<Location> movesToEscapeCheck(Location toMove);
 public:
 	// Constructors & Destructors
 	Board();
@@ -27,6 +24,9 @@ public:
 	bool hasPieceAt(Location loc);
 	// Returns a NULL pointer if the piece was not found.
 	LocationPtr findPiece(ChessPieceType type, ChessColor color);
+	// Rather slow; probably shouldn't be used unless you're actually
+	// trying to escape check.
+	std::set<Location> movesToEscapeCheck(Location toMove);
 	// Precondition: the specified move is valid
 	void movePiece(Location oldLoc, Location newLoc);
 	// Precondition: the specified space is empty
@@ -39,8 +39,10 @@ public:
 	
 	// Algorithms
 	bool stalemate();
+	bool playerInCheck(ChessColor color);
 	bool whiteInCheck();
 	bool blackInCheck();
+	bool playerInCheckmate(ChessColor color);
 	bool whiteInCheckmate();
 	bool blackInCheckmate();
 };

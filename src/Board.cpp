@@ -134,12 +134,12 @@ void Board::placeDefaultPieces()
 	ptr = PiecePtr(new Queen(ChessColorWhite));
 	board[7][3] = ptr;
 	ptr = PiecePtr(new Queen(ChessColorBlack));
-	board[0][4] = ptr;
+	board[0][3] = ptr;
 	// Kings
 	ptr = PiecePtr(new King(ChessColorWhite));
 	board[7][4] = ptr;
 	ptr = PiecePtr(new King(ChessColorBlack));
-	board[0][3] = ptr;
+	board[0][4] = ptr;
 	// Pawns
 	ptr = PiecePtr(new Pawn(ChessColorWhite));
 	PiecePtr blackPawn(new Pawn(ChessColorBlack));
@@ -245,6 +245,30 @@ LocationPtr Board::findPiece(ChessPieceType type, ChessColor color)
 
 set<Location> Board::movesToEscapeCheck(Location toMove)
 {
-	return set<Location>();
+	PiecePtr pieceToMove = at(toMove);
+	assert(pieceToMove != NULL);
+
+	set<Location> validMoves; // those that will escape check
+	set<Location> allMoves = at(toMove)->validMoves(toMove, *this);
+
+	for (set<Location>::const_iterator moveIter = allMoves.begin(); moveIter != allMoves.end(); moveIter++)
+	{
+		// try making the move and see if it escapes check
+		Location moveToCheck = *moveIter;
+		PiecePtr taken = at(moveToCheck);
+		movePiece(toMove, moveToCheck);
+		// now check to see if the player is still in check
+		if (!playerInCheck(pieceToMove->color()))
+		{
+			validMoves.insert(moveToCheck);
+		}
+		// now undo the move
+		movePiece(moveToCheck, toMove);
+		if (taken != NULL)
+		{
+			insertPiece(moveToCheck, taken);
+		}
+	}
+	return validMoves;
 }
 

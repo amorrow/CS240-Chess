@@ -55,6 +55,10 @@ public:
 	// Determines if the given piece belongs to the player whose
 	// turn it currently is.
 	bool belongsToCurrentPlayer(PiecePtr p);
+
+	// Returns true if the player whose turn it currently is
+	// is in check.
+	bool currentPlayerInCheck();
 };
 
 #endif
