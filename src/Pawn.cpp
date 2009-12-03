@@ -27,11 +27,13 @@ set<Location> Pawn::validMoves(Location current, Board& board) const
 	{
 		moves.insert(next);
 	}
-	if ((this->color() == ChessColorWhite && current.row() == 6)
-			|| (this->color() == ChessColorBlack && current.row() == 1))
+
+	next = Location(current.row()+(2*spacesToMove), current.column());
+	if (((this->color() == ChessColorWhite && current.row() == 6)
+			|| (this->color() == ChessColorBlack && current.row() == 1)) && board.at(next) == NULL)
 	{
 		// first move of length two
-		moves.insert(Location(current.row()+(2*spacesToMove), current.column()));
+		moves.insert(next);
 	}
 
 	// now check to see if there are any pieces we could take

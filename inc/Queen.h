@@ -3,9 +3,10 @@
 #ifndef _CS240CHESS_QUEEN_H
 #define _CS240CHESS_QUEEN_H
 
-#include "Piece.h"
+#include "Rook.h"
+#include "Bishop.h"
 
-class Queen : public Piece
+class Queen : public Rook, public Bishop
 {
 public:
 	Queen(ChessColor color);

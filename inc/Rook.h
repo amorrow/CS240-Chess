@@ -5,7 +5,7 @@
 
 #include "Piece.h"
 
-class Rook : public Piece
+class Rook : public virtual Piece
 {
 public:
 	Rook(ChessColor color);

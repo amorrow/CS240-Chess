@@ -5,7 +5,7 @@
 
 #include "Piece.h"
 
-class Bishop : public Piece
+class Bishop : public virtual Piece
 {
 public:
 	Bishop(ChessColor color);
