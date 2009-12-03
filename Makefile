@@ -16,7 +16,7 @@ LIBS = `pkg-config $(GTKMM) $(SIGC) $(LIBGLADE) --libs`
 
 #LIB_FLAGS D_LOG_DOMAIN is used by g_log in the ChessGui library to seperate logging messages from the library
 # from logging messages from the students code
-LIB_FLAGS = -DG_LOG_DOMAIN=\"ChessGui\" -shared
+LIB_FLAGS = -DG_LOG_DOMAIN=\"ChessGui\" -shared -fPIC
 
 
 LIBRARY= lib/libcs240.so
