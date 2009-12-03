@@ -14,6 +14,8 @@ string ChessStatusMessageWhitesTurn = "White's Turn";
 string ChessStatusMessageBlacksTurn = "Black's Turn";
 string ChessStatusMessageWhiteInCheck = "White's Turn (In Check)";
 string ChessStatusMessageBlackInCheck = "Black's Turn (In Check)";
+string ChessStatusMessageWhiteWins = "Black In Checkmate (White Wins)";
+string ChessStatusMessageBlackWins = "White In Checkmate (Black Wins)";
 
 // Using pseudo-code, since I don't yet know the API of the XML library
 // I'm planning to use.
@@ -198,6 +200,7 @@ void Game::updateGameStatus()
 		if (_board.blackInCheckmate())
 		{
 			_status = ChessGameStatusWhiteWins;
+			_message = ChessStatusMessageWhiteWins;
 		}
 		else
 		{
@@ -213,6 +216,7 @@ void Game::updateGameStatus()
 		if (_board.whiteInCheckmate())
 		{
 			_status = ChessGameStatusBlackWins;
+			_message = ChessStatusMessageBlackWins;
 		}
 		else
 		{

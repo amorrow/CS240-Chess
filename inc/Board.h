@@ -8,13 +8,14 @@
 #include "Location.h"
 #include "Piece.h"
 #include "ChessDefinitions.h"
-#include <map>
 
 class Board
 {
 private:
 	PiecePtr** board;
 	bool playerInCheck(ChessColor color);
+	bool playerInCheckmate(ChessColor color);
+	std::set<Location> movesToEscapeCheck(Location toMove);
 public:
 	// Constructors & Destructors
 	Board();
@@ -45,3 +46,4 @@ public:
 };
 
 #endif
+

@@ -167,12 +167,12 @@ bool Board::blackInCheck()
 
 bool Board::whiteInCheckmate()
 {
-	return false;
+	return playerInCheckmate(ChessColorWhite);
 }
 
 bool Board::blackInCheckmate()
 {
-	return false;
+	return playerInCheckmate(ChessColorBlack);
 }
 
 bool Board::playerInCheck(ChessColor color)
@@ -198,6 +198,35 @@ bool Board::playerInCheck(ChessColor color)
 	return false;
 }
 
+// Strategy: First, be certain the player is actually in check.
+// Second, iterate over all the player's pieces.
+// Check each one to see if it has any moves that will allow the
+// player to escape check. If none of the player's pieces will
+// escape the check, it's a checkmate.
+bool Board::playerInCheckmate(ChessColor color)
+{
+	if (!playerInCheck(color))
+		return false;
+
+	LocationPtr kingLocation = findPiece(ChessPieceTypeKing, color);
+	for (int row = 0; row < BOARD_NUM_ROWS; row++)
+	{
+		for (int col = 0; col < BOARD_NUM_COLS; col++)
+		{
+			PiecePtr piece = at(Location(row, col));
+			if (piece == NULL || (piece != NULL && piece->color() != color))
+				continue; // skip empty squares & enemy pieces
+			set<Location> escapeMoves = movesToEscapeCheck(Location(row, col));
+			if (escapeMoves.size() > 0)
+			{
+				g_debug("Piece at (%d, %d) allows escape from check.", row, col);
+				return false; // there's at least one move to escape check
+			}
+		}
+	}
+	return true;
+}
+
 LocationPtr Board::findPiece(ChessPieceType type, ChessColor color)
 {
 	for (int row = 0; row < BOARD_NUM_ROWS; row++)
@@ -212,5 +241,10 @@ LocationPtr Board::findPiece(ChessPieceType type, ChessColor color)
 		}
 	}
 	return LocationPtr();
+}
+
+set<Location> Board::movesToEscapeCheck(Location toMove)
+{
+	return set<Location>();
 }
 
