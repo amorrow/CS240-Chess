@@ -3,6 +3,8 @@
  */
 
 #include "Board.h"
+#include <glib.h>
+#include <cassert>
 
 // Pieces
 #include "Rook.h"
@@ -155,12 +157,12 @@ bool Board::stalemate()
 
 bool Board::whiteInCheck()
 {
-	return false;
+	return playerInCheck(ChessColorWhite);
 }
 
 bool Board::blackInCheck()
 {
-	return false;
+	return playerInCheck(ChessColorBlack);
 }
 
 bool Board::whiteInCheckmate()
@@ -171,5 +173,44 @@ bool Board::whiteInCheckmate()
 bool Board::blackInCheckmate()
 {
 	return false;
+}
+
+bool Board::playerInCheck(ChessColor color)
+{
+	LocationPtr kingLocation = findPiece(ChessPieceTypeKing, color);
+	assert(kingLocation != NULL); // should always find the king
+	for (int row = 0; row < BOARD_NUM_ROWS; row++)
+	{
+		for (int col = 0; col < BOARD_NUM_COLS; col++)
+		{
+			PiecePtr piece = at(Location(row, col));
+			if (piece == NULL || (piece != NULL && piece->color() == color))
+				continue;
+			// we have an enemy piece
+			set<Location> enemyMoves = piece->validMoves(Location(row, col), *this);
+			if (enemyMoves.find(*kingLocation) != enemyMoves.end())
+			{
+				g_debug("Piece at (%d,%d) is causing check.", row, col);
+				return true; // an enemy move set included the king's location
+			}
+		}
+	}
+	return false;
+}
+
+LocationPtr Board::findPiece(ChessPieceType type, ChessColor color)
+{
+	for (int row = 0; row < BOARD_NUM_ROWS; row++)
+	{
+		for (int col = 0; col < BOARD_NUM_COLS; col++)
+		{
+			PiecePtr piece = at(Location(row, col));
+			if (piece != NULL && piece->type() == type && piece->color() == color)
+			{
+				return LocationPtr(new Location(row, col));
+			}
+		}
+	}
+	return LocationPtr();
 }
 

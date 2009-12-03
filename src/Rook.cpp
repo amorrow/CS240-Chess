@@ -12,7 +12,6 @@ Rook::Rook(ChessColor color) : Piece(ChessPieceTypeRook, color)
 
 set<Location> Rook::validMoves(Location current, Board& board) const
 {
-	g_debug("Rook asked for its moves.");
 	set<Location> moves;
 	//look to the right until we run into the edge or another piece
 	for (int col = current.column() + 1; col < BOARD_NUM_COLS; col++)

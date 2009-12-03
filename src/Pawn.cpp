@@ -11,7 +11,6 @@ Pawn::Pawn(ChessColor color) : Piece(ChessPieceTypePawn, color)
 
 set<Location> Pawn::validMoves(Location current, Board& board) const
 {
-	g_debug("Pawn asked for its moves.");
 	set<Location> moves;
 	int spacesToMove;
 	if (this->color() == ChessColorWhite)

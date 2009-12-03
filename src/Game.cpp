@@ -12,6 +12,8 @@ using namespace std;
 // Defines
 string ChessStatusMessageWhitesTurn = "White's Turn";
 string ChessStatusMessageBlacksTurn = "Black's Turn";
+string ChessStatusMessageWhiteInCheck = "White's Turn (In Check)";
+string ChessStatusMessageBlackInCheck = "Black's Turn (In Check)";
 
 // Using pseudo-code, since I don't yet know the API of the XML library
 // I'm planning to use.
@@ -197,8 +199,11 @@ void Game::updateGameStatus()
 		}
 		else
 		{
+			if (_board.blackInCheck())
+				_message = ChessStatusMessageBlackInCheck;
+			else
+				_message = ChessStatusMessageBlacksTurn;
 			_status = ChessGameStatusBlacksTurn;
-			_message = ChessStatusMessageBlacksTurn;
 		}
 	}
 	else
@@ -210,7 +215,10 @@ void Game::updateGameStatus()
 		else
 		{
 			_status = ChessGameStatusWhitesTurn;
-			_message = ChessStatusMessageWhitesTurn;
+			if (_board.whiteInCheck())
+				_message = ChessStatusMessageWhiteInCheck;
+			else
+				_message = ChessStatusMessageWhitesTurn;
 		}
 	}
 }

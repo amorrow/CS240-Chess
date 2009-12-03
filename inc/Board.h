@@ -14,6 +14,7 @@ class Board
 {
 private:
 	PiecePtr** board;
+	bool playerInCheck(ChessColor color);
 public:
 	// Constructors & Destructors
 	Board();
@@ -23,6 +24,8 @@ public:
 	ChessPieceType typeAt(Location loc);
 	ChessColor colorAt(Location loc);
 	bool hasPieceAt(Location loc);
+	// Returns a NULL pointer if the piece was not found.
+	LocationPtr findPiece(ChessPieceType type, ChessColor color);
 	// Precondition: the specified move is valid
 	void movePiece(Location oldLoc, Location newLoc);
 	// Precondition: the specified space is empty
