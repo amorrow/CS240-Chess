@@ -18,7 +18,8 @@ typedef enum
 	InChessGameState,
 	InBoardState,
 	InHistoryState,
-	InMoveState
+	InMoveState,
+	EndState,
 } ChessDocParserState;
 
 class ChessDocParser : public Parser
@@ -28,8 +29,9 @@ private:
 	ChessDocParserState state;
 protected:
 	virtual void on_error(ParseContext& context, const MarkupError& error);
-	virtual void on_start_element(ParseContext& context, const Glib::ustring& element_name, const AttributeMap& attributes);
-	virtual void on_text(ParseContext& context, const Glib::ustring& text);
+	virtual void on_start_element(ParseContext& context, const ustring& element_name, const AttributeMap& attributes);
+	virtual void on_end_element(ParseContext& context, const ustring& element_name);
+	virtual void on_text(ParseContext& context, const ustring& text);
 public:
 	ChessDocParser(Game& _game);
 };
