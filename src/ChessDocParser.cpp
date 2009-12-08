@@ -36,30 +36,11 @@ void ChessDocParser::on_start_element(
 	}
 	else if (state == InChessGameState)
 	{
-		if (element_name == "board")
-		{
-			state = InBoardState;
-		}
-		else if (element_name == "history")
-		{
-			state = InHistoryState;
-		}
-		else
-		{
-			throw MarkupError(MarkupError::INVALID_CONTENT,
-					"<chessgame> may only contain <board> and <history>");
-		}
+		parseChessGameState(element_name);
 	}
 	else if (state == InBoardState)
 	{
-		if (element_name != "piece")
-		{
-			throw MarkupError(MarkupError::INVALID_CONTENT, "<board> may only contain <piece>");
-		}
-		PiecePtr piece;
-		LocationPtr loc;
-		parsePiece(context, attributes, &piece, &loc);
-		game.board().insertPiece(*loc, piece);
+		parseBoardState(element_name, attributes);
 	}
 	else if (state == InHistoryState)
 	{
@@ -74,41 +55,17 @@ void ChessDocParser::on_start_element(
 		// first piece in a move
 		PiecePtr piece;
 		LocationPtr loc;
-		parsePiece(context, attributes, &piece, &loc);
+		parsePiece(attributes, &piece, &loc);
 		this->move = Move(piece, *loc);
 		state = InMoveAfterFirstPieceState;
 	}
 	else if (state == InMoveAfterFirstPieceState)
 	{
-		// second piece
-		PiecePtr piece;
-		LocationPtr loc;
-		parsePiece(context, attributes, &piece, &loc);
-		if (*piece != *(this->move.piece()))
-		{
-			throw MarkupError(MarkupError::INVALID_CONTENT,
-					"the first two <piece>s in a <move> tag must be the same");
-		}
-		this->move.moveTo(*loc);
-		state = InMoveAfterSecondPieceState;
+		parseAfterFirstState(element_name, attributes);
 	}
 	else if (state == InMoveAfterSecondPieceState)
 	{
-		// check that it's another piece tag
-		// then take that piece
-		if (element_name != "piece")
-		{
-			throw MarkupError(MarkupError::INVALID_CONTENT, "only <piece>s allowed inside a <move>");
-		}
-		PiecePtr piece;
-		LocationPtr loc;
-		parsePiece(context, attributes, &piece, &loc);
-		if (*piece == *(this->move.piece()))
-		{
-			throw MarkupError(MarkupError::INVALID_CONTENT, "a piece may not take itself!");
-		}
-		move.take(piece);
-		state = InMoveAfterThirdPieceState;
+		parseAfterSecondState(element_name, attributes);
 	}
 	else
 	{
@@ -169,7 +126,6 @@ void ChessDocParser::on_text(ParseContext& context, const Glib::ustring& text)
 
 //////////////////// Sub-parsing methods
 void ChessDocParser::parsePiece(
-		ParseContext& context,
 		const AttributeMap& attributes,
 		PiecePtr* outPiece,
 		LocationPtr* outLocation)
@@ -214,5 +170,74 @@ void ChessDocParser::parsePiece(
 	LocationPtr newLocation(new Location(row, col));
 	*outPiece = newPiece;
 	*outLocation = newLocation;
+}
+
+void ChessDocParser::parseBoardState(
+			const Glib::ustring& element_name,
+			const AttributeMap& attributes)
+{
+	if (element_name != "piece")
+	{
+		throw MarkupError(MarkupError::INVALID_CONTENT, "<board> may only contain <piece>");
+	}
+	PiecePtr piece;
+	LocationPtr loc;
+	parsePiece(attributes, &piece, &loc);
+	game.board().insertPiece(*loc, piece);
+}
+
+void ChessDocParser::parseChessGameState(const Glib::ustring& element_name)
+{
+	if (element_name == "board")
+	{
+		state = InBoardState;
+	}
+	else if (element_name == "history")
+	{
+		state = InHistoryState;
+	}
+	else
+	{
+		throw MarkupError(MarkupError::INVALID_CONTENT,
+				"<chessgame> may only contain <board> and <history>");
+	}
+}
+
+void ChessDocParser::parseAfterFirstState(
+			const Glib::ustring& element_name,
+			const AttributeMap& attributes)
+{
+	// second piece
+	PiecePtr piece;
+	LocationPtr loc;
+	parsePiece(attributes, &piece, &loc);
+	if (*piece != *(this->move.piece()))
+	{
+		throw MarkupError(MarkupError::INVALID_CONTENT,
+				"the first two <piece>s in a <move> tag must be the same");
+	}
+	this->move.moveTo(*loc);
+	state = InMoveAfterSecondPieceState;
+}
+
+void ChessDocParser::parseAfterSecondState(
+			const Glib::ustring& element_name,
+			const AttributeMap& attributes)
+{
+	// check that it's another piece tag
+	// then take that piece
+	if (element_name != "piece")
+	{
+		throw MarkupError(MarkupError::INVALID_CONTENT, "only <piece>s allowed inside a <move>");
+	}
+	PiecePtr piece;
+	LocationPtr loc;
+	parsePiece(attributes, &piece, &loc);
+	if (*piece == *(this->move.piece()))
+	{
+		throw MarkupError(MarkupError::INVALID_CONTENT, "a piece may not take itself!");
+	}
+	move.take(piece);
+	state = InMoveAfterThirdPieceState;
 }
 

@@ -32,10 +32,19 @@ private:
 	ChessDocParserState state;
 	Move move;
 	void parsePiece(
-			ParseContext& context,
 			const AttributeMap& attributes,
 			PiecePtr* outPiece,
 			LocationPtr* outLocation);
+	void parseChessGameState(const Glib::ustring& element_name);
+	void parseBoardState(
+			const Glib::ustring& element_name,
+			const AttributeMap& attributes);
+	void parseAfterFirstState(
+			const Glib::ustring& element_name,
+			const AttributeMap& attributes);
+	void parseAfterSecondState(
+			const Glib::ustring& element_name,
+			const AttributeMap& attributes);
 protected:
 	virtual void on_error(ParseContext& context, const MarkupError& error);
 	virtual void on_start_element(
