@@ -100,9 +100,15 @@ string Game::pieceTag(PiecePtr piece, Location loc)
 			break;
 		case ChessPieceTypeKing:
 			type = "king";
+			break;
+		case ChessPieceTypeNoPiece:
+			assert(false);
 	}
 
-	strs << "<piece type=\"" << type << "\" color=\"" << color << "\" row=\"" << loc.row() << "\" column = \"" << loc.column() << "\" />";
+	strs << "<piece type=\"" << type;
+	strs << "\" color=\"" << color;
+	strs << "\" row=\"" << loc.row();
+	strs << "\" column = \"" << loc.column() << "\" />";
 	return strs.str();
 }
 
