@@ -80,7 +80,28 @@ string Game::pieceTag(PiecePtr piece, Location loc)
 {
 	stringstream strs;
 	string color = (piece->color() == ChessColorWhite ? "white" : "black");
-	string type = "errr";
+	string type;
+	switch(piece->type())
+	{
+		case ChessPieceTypePawn:
+			type = "pawn";
+			break;
+		case ChessPieceTypeRook:
+			type = "rook";
+			break;
+		case ChessPieceTypeKnight:
+			type = "knight";
+			break;
+		case ChessPieceTypeBishop:
+			type = "bishop";
+			break;
+		case ChessPieceTypeQueen:
+			type = "queen";
+			break;
+		case ChessPieceTypeKing:
+			type = "king";
+	}
+
 	strs << "<piece type=\"" << type << "\" color=\"" << color << "\" row=\"" << loc.row() << "\" column = \"" << loc.column() << "\" />";
 	return strs.str();
 }
