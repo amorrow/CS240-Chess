@@ -19,7 +19,11 @@ void ChessDocParser::on_error(ParseContext& context, const MarkupError& error)
 	g_debug("ChessDocParser::on_error");
 }
 
-void ChessDocParser::on_start_element(ParseContext& context, const Glib::ustring& element_name, const AttributeMap& attributes)
+void ChessDocParser::on_start_element(
+		ParseContext& context,
+		const Glib::ustring& element_name,
+		const AttributeMap& attributes
+									)
 {
 	g_debug("ChessDocParser::on_start_element");
 	if (state == StartState)
@@ -42,7 +46,8 @@ void ChessDocParser::on_start_element(ParseContext& context, const Glib::ustring
 		}
 		else
 		{
-			throw MarkupError(MarkupError::INVALID_CONTENT, "<chessgame> may only contain <board> and <history>");
+			throw MarkupError(MarkupError::INVALID_CONTENT,
+					"<chessgame> may only contain <board> and <history>");
 		}
 	}
 	else if (state == InBoardState)
@@ -81,7 +86,8 @@ void ChessDocParser::on_start_element(ParseContext& context, const Glib::ustring
 		parsePiece(context, attributes, &piece, &loc);
 		if (*piece != *(this->move.piece()))
 		{
-			throw MarkupError(MarkupError::INVALID_CONTENT, "the first two <piece>s in a <move> tag must be the same");
+			throw MarkupError(MarkupError::INVALID_CONTENT,
+					"the first two <piece>s in a <move> tag must be the same");
 		}
 		this->move.moveTo(*loc);
 		state = InMoveAfterSecondPieceState;
@@ -162,11 +168,16 @@ void ChessDocParser::on_text(ParseContext& context, const Glib::ustring& text)
 }
 
 //////////////////// Sub-parsing methods
-void ChessDocParser::parsePiece(ParseContext& context, const AttributeMap& attributes, PiecePtr* outPiece, LocationPtr* outLocation)
+void ChessDocParser::parsePiece(
+		ParseContext& context,
+		const AttributeMap& attributes,
+		PiecePtr* outPiece,
+		LocationPtr* outLocation)
 {
 	PiecePtr newPiece;
 	ustring type = attributes.find("type")->second;
-	ChessColor color = (attributes.find("color")->second == "white" ? ChessColorWhite : ChessColorBlack);
+	ChessColor color =
+		(attributes.find("color")->second == "white" ? ChessColorWhite : ChessColorBlack);
 
 	if (type == "pawn")
 	{

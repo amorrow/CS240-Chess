@@ -31,10 +31,17 @@ private:
 	Game& game;
 	ChessDocParserState state;
 	Move move;
-	void parsePiece(ParseContext& context, const AttributeMap& attributes, PiecePtr* outPiece, LocationPtr* outLocation);
+	void parsePiece(
+			ParseContext& context,
+			const AttributeMap& attributes,
+			PiecePtr* outPiece,
+			LocationPtr* outLocation);
 protected:
 	virtual void on_error(ParseContext& context, const MarkupError& error);
-	virtual void on_start_element(ParseContext& context, const ustring& element_name, const AttributeMap& attributes);
+	virtual void on_start_element(
+			ParseContext& context,
+			const ustring& element_name,
+			const AttributeMap& attributes);
 	virtual void on_end_element(ParseContext& context, const ustring& element_name);
 	virtual void on_text(ParseContext& context, const ustring& text);
 public:

@@ -43,25 +43,6 @@ void Game::load(string path)
 		g_warning("Could not open file!");
 		g_warning("Message: %s", err.what().c_str());
 	}
-	/*
-	clear();
-	xmldoc doc(path);
-	xmldoc::iterator pieces = doc.select("XPath selector to find piece nodes");
-	for (; pieces != doc.end(); pieces++)
-	{
-		_board.insertPiece(Location(pieces->row, pieces->col), Piece(pieces->type));
-	}
-	xmldoc::iterator moves = doc.select("XPath selector to find move nodes");
-	for (; moves != doc.end(); moves++)
-	{
-		Move move(Piece(moves->type), Location(moves->oldRow, moves->oldCol), Location(moves->newRow, moves->newCol));
-		if (moves->taken)
-		{
-			move.take(Piece(moves->taken));
-		}
-		_history.push_back(move);
-	}
-	*/
 }
 
 // Using pseudo-code, since I don't yet know the API of the XML library
@@ -263,7 +244,9 @@ bool Game::belongsToCurrentPlayer(PiecePtr p)
 
 bool Game::currentPlayerInCheck()
 {
-	return _board.playerInCheck((_status == ChessGameStatusWhitesTurn ? ChessColorWhite : ChessColorBlack));
+	return _board.playerInCheck(
+			(_status == ChessGameStatusWhitesTurn ? ChessColorWhite : ChessColorBlack)
+	);
 }
 
 void Game::addToHistory(Move move)

@@ -14,10 +14,12 @@ Move::~Move()
 Move::Move(PiecePtr p, Location oldL) : _piece(p), _oldLocation(oldL)
 {}
 
-Move::Move(PiecePtr p, Location oldL, Location newL) : _piece(p), _oldLocation(oldL), _newLocation(newL)
+Move::Move(PiecePtr p, Location oldL, Location newL)
+	: _piece(p), _oldLocation(oldL), _newLocation(newL)
 {}
 
-Move::Move(PiecePtr p, Location oldL, Location newL, PiecePtr taken) : _piece(p), _oldLocation(oldL), _newLocation(newL), _taken(taken)
+Move::Move(PiecePtr p, Location oldL, Location newL, PiecePtr taken)
+	: _piece(p), _oldLocation(oldL), _newLocation(newL), _taken(taken)
 {}
 
 PiecePtr Move::piece() const

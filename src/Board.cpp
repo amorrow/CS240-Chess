@@ -283,7 +283,10 @@ set<Location> Board::movesToEscapeCheck(Location toMove)
 	set<Location> validMoves; // those that will escape check
 	set<Location> allMoves = at(toMove)->validMoves(toMove, *this);
 
-	for (set<Location>::const_iterator moveIter = allMoves.begin(); moveIter != allMoves.end(); moveIter++)
+	for (
+		set<Location>::const_iterator moveIter = allMoves.begin();
+		moveIter != allMoves.end();
+		moveIter++)
 	{
 		// try making the move and see if it escapes check
 		Location moveToCheck = *moveIter;
