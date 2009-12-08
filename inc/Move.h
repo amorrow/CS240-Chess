@@ -18,6 +18,7 @@ private:
 public:
 	Move();
 	~Move();
+	Move(PiecePtr p, Location oldL);
 	Move(PiecePtr p, Location oldL, Location newL);
 	Move(PiecePtr p, Location oldL, Location newL, PiecePtr taken);
 	
@@ -26,6 +27,7 @@ public:
 	Location newLocation() const;
 	PiecePtr pieceTaken() const;
 	
+	void moveTo(Location newL);
 	void take(PiecePtr p);
 };
 

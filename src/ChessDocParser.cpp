@@ -11,7 +11,7 @@
 #include "Queen.h"
 #include "King.h"
 
-ChessDocParser::ChessDocParser(Game& _game) : Parser(), game(_game), state(StartState)
+ChessDocParser::ChessDocParser(Game& _game) : Parser(), game(_game), state(StartState), move()
 {}
 
 void ChessDocParser::on_error(ParseContext& context, const MarkupError& error)
@@ -51,7 +51,10 @@ void ChessDocParser::on_start_element(ParseContext& context, const Glib::ustring
 		{
 			throw MarkupError(MarkupError::INVALID_CONTENT, "<board> may only contain <piece>");
 		}
-		parsePiece(context, attributes);
+		PiecePtr piece;
+		LocationPtr loc;
+		parsePiece(context, attributes, &piece, &loc);
+		game.board().insertPiece(*loc, piece);
 	}
 	else if (state == InHistoryState)
 	{
@@ -63,11 +66,43 @@ void ChessDocParser::on_start_element(ParseContext& context, const Glib::ustring
 	}
 	else if (state == InMoveState)
 	{
-		// parse the move here
-		// we need to get two separate piece tags
-		// so we probably need to change state after the first one
-		// and we probably ought to generalize that parsePiece method
-		// so that we can reuse it here
+		// first piece in a move
+		PiecePtr piece;
+		LocationPtr loc;
+		parsePiece(context, attributes, &piece, &loc);
+		this->move = Move(piece, *loc);
+		state = InMoveAfterFirstPieceState;
+	}
+	else if (state == InMoveAfterFirstPieceState)
+	{
+		// second piece
+		PiecePtr piece;
+		LocationPtr loc;
+		parsePiece(context, attributes, &piece, &loc);
+		if (*piece != *(this->move.piece()))
+		{
+			throw MarkupError(MarkupError::INVALID_CONTENT, "the first two <piece>s in a <move> tag must be the same");
+		}
+		this->move.moveTo(*loc);
+		state = InMoveAfterSecondPieceState;
+	}
+	else if (state == InMoveAfterSecondPieceState)
+	{
+		// check that it's another piece tag
+		// then take that piece
+		if (element_name != "piece")
+		{
+			throw MarkupError(MarkupError::INVALID_CONTENT, "only <piece>s allowed inside a <move>");
+		}
+		PiecePtr piece;
+		LocationPtr loc;
+		parsePiece(context, attributes, &piece, &loc);
+		if (*piece == *(this->move.piece()))
+		{
+			throw MarkupError(MarkupError::INVALID_CONTENT, "a piece may not take itself!");
+		}
+		move.take(piece);
+		state = InMoveAfterThirdPieceState;
 	}
 	else
 	{
@@ -101,10 +136,20 @@ void ChessDocParser::on_end_element(ParseContext& context, const ustring& elemen
 			state = InChessGameState;
 			break;
 		case InMoveState:
+		case InMoveAfterFirstPieceState:
+			if (element_name == "move")
+				throw MarkupError(MarkupError::INVALID_CONTENT, "not enough <piece> tags in <move> tag");
+		case InMoveAfterSecondPieceState:
+		case InMoveAfterThirdPieceState:
 			if (element_name != "piece" && element_name != "move")
 				throw MarkupError(MarkupError::INVALID_CONTENT, "invalid close tag");
 			if (element_name == "move")
+			{
+				// put the completed move into the history
+				game.addToHistory(this->move);
+				move = Move();
 				state = InHistoryState;
+			}
 			break;
 		case EndState:
 			throw MarkupError(MarkupError::INVALID_CONTENT, "no tags allowed after </chessgame>");
@@ -117,7 +162,7 @@ void ChessDocParser::on_text(ParseContext& context, const Glib::ustring& text)
 }
 
 //////////////////// Sub-parsing methods
-void ChessDocParser::parsePiece(ParseContext& context, const AttributeMap& attributes)
+void ChessDocParser::parsePiece(ParseContext& context, const AttributeMap& attributes, PiecePtr* outPiece, LocationPtr* outLocation)
 {
 	PiecePtr newPiece;
 	ustring type = attributes.find("type")->second;
@@ -155,8 +200,8 @@ void ChessDocParser::parsePiece(ParseContext& context, const AttributeMap& attri
 
 	int row = atoi(attributes.find("row")->second.c_str());
 	int col = atoi(attributes.find("column")->second.c_str());
-	Location newLocation(row, col);
-	game.board().insertPiece(newLocation, newPiece);
-
+	LocationPtr newLocation(new Location(row, col));
+	*outPiece = newPiece;
+	*outLocation = newLocation;
 }
 

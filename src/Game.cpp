@@ -266,3 +266,8 @@ bool Game::currentPlayerInCheck()
 	return _board.playerInCheck((_status == ChessGameStatusWhitesTurn ? ChessColorWhite : ChessColorBlack));
 }
 
+void Game::addToHistory(Move move)
+{
+	_history.push_back(move);
+}
+

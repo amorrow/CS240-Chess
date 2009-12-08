@@ -28,6 +28,8 @@ public:
 	virtual std::set<Location> validMoves(Location current, Board& board) const = 0;
 	ChessPieceType type() const;
 	ChessColor color() const;
+	bool operator==(const Piece& other) const;
+	bool operator!=(const Piece& other) const;
 };
 
 typedef boost::shared_ptr<Piece> PiecePtr;

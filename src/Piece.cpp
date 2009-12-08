@@ -40,3 +40,13 @@ void Piece::checkAndAddLocation(Location& loc, Board& board, set<Location>& move
 	}
 }
 
+bool Piece::operator==(const Piece& other) const
+{
+	return (_type == other._type) && (_color == other._color);
+}
+
+bool Piece::operator!=(const Piece& other) const
+{
+	return !(*this == other);
+}
+

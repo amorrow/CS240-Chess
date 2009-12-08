@@ -19,6 +19,9 @@ typedef enum
 	InBoardState,
 	InHistoryState,
 	InMoveState,
+	InMoveAfterFirstPieceState,
+	InMoveAfterSecondPieceState,
+	InMoveAfterThirdPieceState,
 	EndState,
 } ChessDocParserState;
 
@@ -27,7 +30,8 @@ class ChessDocParser : public Parser
 private:
 	Game& game;
 	ChessDocParserState state;
-	void parsePiece(ParseContext& context, const AttributeMap& attributes);
+	Move move;
+	void parsePiece(ParseContext& context, const AttributeMap& attributes, PiecePtr* outPiece, LocationPtr* outLocation);
 protected:
 	virtual void on_error(ParseContext& context, const MarkupError& error);
 	virtual void on_start_element(ParseContext& context, const ustring& element_name, const AttributeMap& attributes);

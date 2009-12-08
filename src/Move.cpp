@@ -11,6 +11,9 @@ Move::~Move()
 {
 }
 
+Move::Move(PiecePtr p, Location oldL) : _piece(p), _oldLocation(oldL)
+{}
+
 Move::Move(PiecePtr p, Location oldL, Location newL) : _piece(p), _oldLocation(oldL), _newLocation(newL)
 {}
 
@@ -35,6 +38,11 @@ Location Move::newLocation() const
 PiecePtr Move::pieceTaken() const
 {
 	return _taken;
+}
+
+void Move::moveTo(Location newL)
+{
+	_newLocation = newL;
 }
 
 void Move::take(PiecePtr p)

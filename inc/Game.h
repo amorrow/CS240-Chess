@@ -59,6 +59,10 @@ public:
 	// Returns true if the player whose turn it currently is
 	// is in check.
 	bool currentPlayerInCheck();
+
+	// Puts the given move in the history.
+	// Should only be called if you know what you're about.
+	void addToHistory(Move move);
 };
 
 #endif
