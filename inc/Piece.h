@@ -24,6 +24,15 @@ protected:
 	// Checks if the piece may move to the given location. If so, adds it to
 	// the given set.
 	void checkAndAddLocation(Location& loc, Board& board, std::set<Location>& moveSet) const;
+	// Iterates over moves in a line, adding them to the given set.
+	// Used for bishop and rook.
+	void addMoves(
+		Location current,
+		Board& board,
+		std::set<Location>& moves,
+		int rowDiff,
+		int colDiff) const;
+
 public:
 	virtual std::set<Location> validMoves(Location current, Board& board) const = 0;
 	ChessPieceType type() const;

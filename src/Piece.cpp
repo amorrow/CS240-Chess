@@ -22,6 +22,34 @@ ChessColor Piece::color() const
 	return _color;
 }
 
+void Piece::addMoves(
+		Location current,
+		Board& board,
+		set<Location>& moves,
+		int rowDiff,
+		int colDiff) const
+{
+	Location next = Location(current.row() + rowDiff, current.column() + colDiff);
+	while(true)
+	{
+		if (!next.isValid())
+			break;
+		if (board.at(next) != NULL)
+		{
+			if (board.at(next)->color() != this->color())
+			{
+				moves.insert(next);
+			}
+			break;
+		}
+		else
+		{
+			moves.insert(next);
+		}
+		next = Location(next.row() + rowDiff, next.column() + colDiff);
+	}
+}
+
 void Piece::checkAndAddLocation(Location& loc, Board& board, set<Location>& moveSet) const
 {
 	if (!loc.isValid())
