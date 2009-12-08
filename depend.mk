@@ -801,7 +801,7 @@ obj/Game.o: src/Game.cpp inc/Game.h inc/Location.h inc/Board.h \
  /usr/include/sigc++-2.0/sigc++/adaptors/lambda/group.h \
  /usr/include/sigc++-2.0/sigc++/functors/functors.h inc/Game.h
 obj/King.o: src/King.cpp inc/King.h inc/Piece.h inc/Location.h \
- inc/ChessDefinitions.h
+ inc/ChessDefinitions.h inc/Board.h
 obj/Knight.o: src/Knight.cpp inc/Knight.h inc/Piece.h inc/Location.h \
  inc/ChessDefinitions.h inc/Board.h
 obj/Location.o: src/Location.cpp inc/Location.h inc/ChessDefinitions.h
@@ -1489,3 +1489,5 @@ obj/Rook.o: src/Rook.cpp inc/Rook.h inc/Piece.h inc/Location.h \
  /usr/include/glib-2.0/glib/gthreadpool.h \
  /usr/include/glib-2.0/glib/gtimer.h /usr/include/glib-2.0/glib/gtree.h \
  /usr/include/glib-2.0/glib/gurifuncs.h inc/Board.h
+test/obj/main.o: test/src/main.cpp inc/Bishop.h inc/Piece.h \
+ inc/Location.h inc/ChessDefinitions.h inc/King.h
