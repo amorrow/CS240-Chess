@@ -22,15 +22,20 @@ LIB_FLAGS = -DG_LOG_DOMAIN=\"ChessGui\" -shared -fPIC
 LIBRARY= lib/libcs240.so
 EXE_NAME = bin/chess
 
+TEST_BIN_NAME = test/bin/test_chess
+TEST_MAIN_SOURCE = test/src/main.cpp
+TEST_MAIN_OBJ = test/obj/main.o
+
 SOURCES = $(foreach file, $(shell ls src/*.cpp), $(basename $(notdir $(file))))
 
 
 LIB_OBJ_FILES = lib/obj/ChessGui.o lib/obj/ChessGuiBoard.o lib/obj/ChessGuiBoardCell.o \
 		lib/obj/ChessGuiImages.o lib/obj/SelectDialog.o
 OBJS = $(foreach file, $(SOURCES), obj/$(file).o)
+OBJS_WITHOUT_MAIN = $(filter-out obj/main.o,$(OBJS))
 
 
-.PHONY: run clean bin lib memtest
+.PHONY: run clean bin test lib memtest depend
 
 
 run: $(EXE_NAME)
@@ -49,17 +54,24 @@ clean:
 
 bin: $(EXE_NAME)
 
+test: $(TEST_BIN_NAME)
+	$(TEST_BIN_NAME)
 
 lib: $(LIBRARY) 
 
 	
 memtest: $(EXE_NAME)
-	G_SLICE=always-malloc G_DEBUG=gc-friendly valgrind --tool=memcheck --leak-check=full --leak-resolution=high --num-callers=20 --show-reachable=yes --suppressions=chess.supp $(EXE_NAME)
+	G_SLICE=always-malloc G_DEBUG=gc-friendly valgrind --tool=memcheck --leak-check=yes --num-callers=20 --show-reachable=yes --suppressions=chess.supp $(EXE_NAME)
 
 	
 $(EXE_NAME): $(OBJS)  $(LIBRARY)
 	$(CC) $(FLAGS) $(CFLAGS) $(LIBS) -o $(EXE_NAME) $(OBJS) $(LIBRARY) 
-	
+
+$(TEST_BIN_NAME) : $(OBJS) $(LIBRARY) $(TEST_MAIN_OBJ)
+	$(CC) $(FLAGS) $(CFLAGS) $(LIBS) -o $(TEST_BIN_NAME) $(OBJS_WITHOUT_MAIN) $(TEST_MAIN_OBJ) $(LIBRARY)
+
+$(TEST_MAIN_OBJ) : $(TEST_MAIN_SOURCE)
+	$(CC) -c $(FLAGS) $(CFLAGS) -o $(TEST_MAIN_OBJ) $(TEST_MAIN_SOURCE)
 
 obj/main.o: src/main.cpp lib/inc/ChessGuiImages.h inc/Chess.h
 	$(CC) -c $(FLAGS) $(CFLAGS) -o obj/main.o src/main.cpp
@@ -69,8 +81,8 @@ obj/Chess.o: src/Chess.cpp inc/Chess.h lib/inc/SelectDialog.h lib/inc/ChessGuiDe
 obj/%.o : src/%.cpp
 	$(CC) -c $(FLAGS) $(CFLAGS) -o $@ $<
 
-depend : depend.mk
-	@-rm depend.mk
+depend : $(shell ls src/*.cpp) $(shell ls inc/*.h)
+	@-rm -f depend.mk
 	@for f in $(SOURCES) ; do g++ -MM -MT obj/$$f.o $(FLAGS) $(CFLAGS) src/$$f.cpp >> depend.mk; done
 
 include depend.mk
