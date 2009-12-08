@@ -34,6 +34,7 @@ protected:
 		int colDiff) const;
 
 public:
+	virtual ~Piece();
 	virtual std::set<Location> validMoves(Location current, Board& board) const = 0;
 	ChessPieceType type() const;
 	ChessColor color() const;

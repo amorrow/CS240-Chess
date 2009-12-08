@@ -10,6 +10,7 @@ class Queen : public Rook, public Bishop
 {
 public:
 	Queen(ChessColor color);
+	virtual ~Queen();
 	virtual std::set<Location> validMoves(Location current, Board& board) const;
 };
 

@@ -10,6 +10,7 @@ class Pawn : public Piece
 {
 public:
 	Pawn(ChessColor color);
+	virtual ~Pawn();
 	virtual std::set<Location> validMoves(Location current, Board& board) const;
 };
 

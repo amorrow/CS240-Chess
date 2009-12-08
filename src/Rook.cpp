@@ -10,6 +10,9 @@ using namespace std;
 Rook::Rook(ChessColor color) : Piece(ChessPieceTypeRook, color)
 {}
 
+Rook::~Rook()
+{}
+
 set<Location> Rook::validMoves(Location current, Board& board) const
 {
 	set<Location> moves;

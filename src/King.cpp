@@ -7,6 +7,9 @@ using namespace std;
 King::King(ChessColor color) : Piece(ChessPieceTypeKing, color)
 {}
 
+King::~King()
+{}
+
 set<Location> King::validMoves(Location current, Board& board) const
 {
 	set<Location> moves;

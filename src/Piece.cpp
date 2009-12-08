@@ -12,6 +12,9 @@ using namespace std;
 Piece::Piece(ChessPieceType type, ChessColor color) : _type(type), _color(color)
 {}
 
+Piece::~Piece()
+{}
+
 ChessPieceType Piece::type() const
 {
 	return _type;

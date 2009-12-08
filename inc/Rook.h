@@ -9,6 +9,7 @@ class Rook : public virtual Piece
 {
 public:
 	Rook(ChessColor color);
+	virtual ~Rook();
 	virtual std::set<Location> validMoves(Location current, Board& board) const;
 };
 

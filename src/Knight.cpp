@@ -8,6 +8,9 @@ using namespace std;
 Knight::Knight(ChessColor color) : Piece(ChessPieceTypeKnight, color)
 {}
 
+Knight::~Knight()
+{}
+
 set<Location> Knight::validMoves(Location current, Board& board) const
 {
 	set<Location> moves;

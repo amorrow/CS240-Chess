@@ -8,6 +8,9 @@ using namespace std;
 Bishop::Bishop(ChessColor color) : Piece(ChessPieceTypeBishop, color)
 {}
 
+Bishop::~Bishop()
+{}
+
 set<Location> Bishop::validMoves(Location current, Board& board) const
 {
 	set<Location> moves;

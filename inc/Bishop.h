@@ -9,6 +9,7 @@ class Bishop : public virtual Piece
 {
 public:
 	Bishop(ChessColor color);
+	virtual ~Bishop();
 	virtual std::set<Location> validMoves(Location current, Board& board) const;
 };
 

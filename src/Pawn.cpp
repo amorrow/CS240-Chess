@@ -9,6 +9,9 @@ using namespace std;
 Pawn::Pawn(ChessColor color) : Piece(ChessPieceTypePawn, color)
 {}
 
+Pawn::~Pawn()
+{}
+
 set<Location> Pawn::validMoves(Location current, Board& board) const
 {
 	set<Location> moves;
