@@ -27,6 +27,7 @@ private:
 	
 	void clear();
 	void updateGameStatus();
+	std::string pieceTag(PiecePtr piece, Location loc);
 public:
 	// Both of the following throw exceptions on errors.
 	void load(std::string path);

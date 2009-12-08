@@ -20,8 +20,6 @@ string ChessStatusMessageWhiteWins = "Black In Checkmate (White Wins)";
 string ChessStatusMessageBlackWins = "White In Checkmate (Black Wins)";
 string ChessStatusMessageStalemate = "Stalemate!";
 
-// Using pseudo-code, since I don't yet know the API of the XML library
-// I'm planning to use.
 void Game::load(string path)
 {
 	clear();
@@ -45,33 +43,46 @@ void Game::load(string path)
 	}
 }
 
-// Using pseudo-code, since I don't yet know the API of the XML library
-// I'm planning to use.
 void Game::save(string path)
 {
-	/*
-	xmldocwriter doc(path);
-	
-	doc.beginHistoryTag();
-	set<Move>::iterator moveIter = _history.begin();
-	for (; moveIter != _history.end(); moveIter++)
+	ofstream outFile(path.c_str());
+	outFile << "<chessgame>";
+	outFile << "<board>";
+	for (int row = 0; row < BOARD_NUM_ROWS; row++)
 	{
-		doc.write(*moveIter);
-	}
-	doc.endHistoryTag();
-	
-	
-	doc.beginBoardTag();
-	for (int row = 0; row < NUM_ROWS; row++)
-	{
-		for (int col = 0; col < NUM_COLS; col++)
+		for (int col = 0; col < BOARD_NUM_COLS; col++)
 		{
-			doc.write(_board.at(Location(row, col)));
+			Location loc(row, col);
+			if (_board.at(loc) != NULL)
+				outFile << pieceTag(_board.at(loc), loc);
 		}
 	}
-	doc.endBoardTag();
-	doc.write();
-	*/
+	outFile << "</board>";
+	outFile << "<history>";
+	for (
+		list<Move>::const_iterator moveIter = _history.begin();
+		moveIter != _history.end();
+		moveIter++)
+	{
+		outFile << "<move>";
+		outFile << pieceTag(moveIter->piece(), moveIter->oldLocation());
+		outFile << pieceTag(moveIter->piece(), moveIter->newLocation());
+		if (moveIter->pieceTaken() != NULL)
+			outFile << pieceTag(moveIter->pieceTaken(), moveIter->newLocation());
+		outFile << "</move>";
+	}
+	outFile << "</history>";
+	outFile << "</chessgame>";
+}
+
+// Returns a string with the XML tag for a piece in it.
+string Game::pieceTag(PiecePtr piece, Location loc)
+{
+	stringstream strs;
+	string color = (piece->color() == ChessColorWhite ? "white" : "black");
+	string type = "errr";
+	strs << "<piece type=\"" << type << "\" color=\"" << color << "\" row=\"" << loc.row() << "\" column = \"" << loc.column() << "\" />";
+	return strs.str();
 }
 
 void Game::startNew()

@@ -67,6 +67,8 @@ class Chess
 		///@{
 		ChessInterface * chessInterface;
 		LocationPtr cellSelected;
+		bool hasFilename;
+		std::string filename;
 		void RedrawBoard(bool fullRedraw=false);
 		void RemoveBoardHighlights();
 		///@}

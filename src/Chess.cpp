@@ -67,6 +67,7 @@ Chess::Chess(std::string gladefile):gui(0),logId(0),chessInterface(0)
 	chessInterface = new ChessInterface();
 	chessInterface->startNewGame();
 	this->RedrawBoard(true);
+	hasFilename = false;
 
 	//**********************************************************************************
 }
@@ -281,6 +282,16 @@ void Chess::on_SaveGame()
 	/*
 	Called when someone selects 'Save' from the toolbar, 'Game' menu, or presses 'Ctrl-S'.
 	*/
+	if (hasFilename)
+	{
+		// save over the old version
+		chessInterface->saveGame(filename);
+	}
+	else
+	{
+		// get a new filename
+		this->on_SaveGameAs();
+	}
 }
 
 void Chess::on_SaveGameAs()
@@ -289,6 +300,19 @@ void Chess::on_SaveGameAs()
 	/*
 	Called when someone selects 'Save As' from the 'Game' menu, or presses 'Shift-Ctrl-S'.
 	*/
+	this->filename = gui->SelectSaveFile();
+	if (this->filename == "")
+		return; // canceled
+	try
+	{
+		chessInterface->saveGame(this->filename);
+		gui->SetStatusBar("Saved game.");
+		hasFilename = true;
+	}
+	catch (Glib::Error &e)
+	{
+		gui->SetStatusBar("Could not save game!");
+	}
 }
 void Chess::on_LoadGame()
 {
