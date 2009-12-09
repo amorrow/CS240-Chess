@@ -5,6 +5,4 @@ lib/src/*.swp
 lib/inc/*.swp
 
 test/src/*.swp
-test/bin/*
-test/obj/*
 
