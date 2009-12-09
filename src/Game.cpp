@@ -263,15 +263,29 @@ void Game::flipTurns()
 
 void Game::updateGameStatus()
 {
-	if (_status == ChessGameStatusWhitesTurn && _board.blackInCheckmate())
+	if (_status == ChessGameStatusWhitesTurn)
 	{
-		_status = ChessGameStatusWhiteWins;
-		_message = ChessStatusMessageWhiteWins;
+		if (_board.whiteInCheck())
+		{
+			_message = ChessStatusMessageWhiteInCheck;
+		}
+		if (_board.blackInCheckmate())
+		{
+			_status = ChessGameStatusWhiteWins;
+			_message = ChessStatusMessageWhiteWins;
+		}
 	}
-	else if (_status == ChessGameStatusBlacksTurn && _board.whiteInCheckmate())
+	else if (_status == ChessGameStatusBlacksTurn)
 	{
-		_status = ChessGameStatusBlackWins;
-		_message = ChessStatusMessageBlackWins;
+		if (_board.blackInCheck())
+		{
+			_message = ChessStatusMessageBlackInCheck;
+		}
+		if (_board.whiteInCheckmate())
+		{
+			_status = ChessGameStatusBlackWins;
+			_message = ChessStatusMessageBlackWins;
+		}
 	}
 	else if (_board.stalemate())
 	{
