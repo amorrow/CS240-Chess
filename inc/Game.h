@@ -28,6 +28,7 @@ private:
 	void clear();
 	void updateGameStatus();
 	void flipTurns();
+	void updateMessage();
 	std::string pieceTag(PiecePtr piece, Location loc);
 public:
 	// Both of the following throw exceptions on errors.

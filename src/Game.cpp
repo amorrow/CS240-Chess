@@ -49,6 +49,7 @@ void Game::load(string path)
 	}
 	// now update the game status
 	updateGameStatus();
+	updateMessage();
 }
 
 void Game::save(string path)
@@ -201,6 +202,7 @@ bool Game::makeMove(Location oldLoc, Location newLoc)
 	updateGameStatus();
 	// flip the turn
 	flipTurns();
+	updateMessage();
 	return true;
 }
 
@@ -219,10 +221,10 @@ bool Game::undoMove()
 	{
 		_board.insertPiece(last.newLocation(), last.pieceTaken());
 	}
-	// This ought to work. Frankly, I'm not completely positive,
-	// but it seems to function properly. Check here for bugs, though.
+	_status = (last.piece()->color() == ChessColorWhite ?
+			ChessGameStatusWhitesTurn : ChessGameStatusBlacksTurn);
 	updateGameStatus();
-	flipTurns();
+	updateMessage();
 	return true;
 }
 
@@ -245,23 +247,31 @@ void Game::flipTurns()
 {
 	if (_status == ChessGameStatusWhitesTurn)
 	{
-		if (_board.blackInCheck())
-			_message = ChessStatusMessageBlackInCheck;
-		else
-			_message = ChessStatusMessageBlacksTurn;
 		_status = ChessGameStatusBlacksTurn;
 	}
-	else
+	else if (_status == ChessGameStatusBlacksTurn)
 	{
 		_status = ChessGameStatusWhitesTurn;
-		if (_board.whiteInCheck())
-			_message = ChessStatusMessageWhiteInCheck;
-		else
-			_message = ChessStatusMessageWhitesTurn;
 	}
 }
 
 void Game::updateGameStatus()
+{
+	if (_board.blackInCheckmate())
+	{
+		_status = ChessGameStatusWhiteWins;
+	}
+	else if (_board.whiteInCheckmate())
+	{
+		_status = ChessGameStatusBlackWins;
+	}
+	else if (_board.stalemate())
+	{
+		_status = ChessGameStatusStalemate;
+	}
+}
+
+void Game::updateMessage()
 {
 	if (_status == ChessGameStatusWhitesTurn)
 	{
@@ -269,10 +279,9 @@ void Game::updateGameStatus()
 		{
 			_message = ChessStatusMessageWhiteInCheck;
 		}
-		if (_board.blackInCheckmate())
+		else
 		{
-			_status = ChessGameStatusWhiteWins;
-			_message = ChessStatusMessageWhiteWins;
+			_message = ChessStatusMessageWhitesTurn;
 		}
 	}
 	else if (_status == ChessGameStatusBlacksTurn)
@@ -281,15 +290,21 @@ void Game::updateGameStatus()
 		{
 			_message = ChessStatusMessageBlackInCheck;
 		}
-		if (_board.whiteInCheckmate())
+		else
 		{
-			_status = ChessGameStatusBlackWins;
-			_message = ChessStatusMessageBlackWins;
+			_message = ChessStatusMessageBlacksTurn;
 		}
 	}
-	else if (_board.stalemate())
+	else if (_status == ChessGameStatusWhiteWins)
 	{
-		_status = ChessGameStatusStalemate;
+		_message = ChessStatusMessageWhiteWins;
+	}
+	else if (_status == ChessGameStatusBlackWins)
+	{
+		_message = ChessStatusMessageBlackWins;
+	}
+	else if (_status == ChessGameStatusStalemate)
+	{
 		_message = ChessStatusMessageStalemate;
 	}
 }
