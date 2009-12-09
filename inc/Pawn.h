@@ -8,6 +8,8 @@
 
 class Pawn : public Piece
 {
+private:
+	static bool TestMovedPawn(std::ostream& os);
 public:
 	Pawn(ChessColor color);
 	virtual ~Pawn();

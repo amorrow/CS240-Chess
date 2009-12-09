@@ -66,11 +66,14 @@ bool Pawn::Test(ostream& os)
 	validMoves.push_back(Location(5,1));
 	validMoves.push_back(Location(4,1));
 
-	for (vector<Location>::const_iterator validIter = validMoves.begin(); validIter != validMoves.end(); validIter++)
+	for (vector<Location>::const_iterator validIter = validMoves.begin();
+			validIter != validMoves.end(); validIter++)
 	{
 		if (givenMoves.erase(*validIter) == 0)
 		{
-			os << "ERROR: pawn did not give move " << validIter->row() << ", " << validIter->column() << " when it was expected to!" << endl;
+			os << "ERROR: pawn did not give move "
+				<< validIter->row() << ", " << validIter->column()
+				<< " when it was expected to!" << endl;
 			return false;
 		}
 	}
@@ -78,26 +81,40 @@ bool Pawn::Test(ostream& os)
 	if (givenMoves.size() > 0)
 	{
 		// extra moves given that don't belong
-		for (set<Location>::const_iterator extraIter = givenMoves.begin(); extraIter != givenMoves.end(); extraIter++)
+		for (set<Location>::const_iterator extraIter = givenMoves.begin();
+				extraIter != givenMoves.end(); extraIter++)
 		{
 			os << "ERROR: pawn gave extra move " << extraIter->row() << ", " << extraIter->column() << endl;
 		}
 		return false;
 	}
 
+	bool pass = TestMovedPawn(os);
+	if (pass)
+		os << "Pawn passed." << endl;
+	return pass;
+}
+
+bool Pawn::TestMovedPawn(ostream& os)
+{
+	Board b;
+	b.placeDefaultPieces();
 	// now move him a bit
 	b.movePiece(Location(6,1), Location(2,1));
-	givenMoves = b.at(Location(2,1))->validMoves(Location(2,1), b);
+	set<Location> givenMoves = b.at(Location(2,1))->validMoves(Location(2,1), b);
 
-	validMoves.clear();
+	vector<Location> validMoves;
 	validMoves.push_back(Location(1,0));
 	validMoves.push_back(Location(1,2));
 
-	for (vector<Location>::const_iterator validIter = validMoves.begin(); validIter != validMoves.end(); validIter++)
+	for (vector<Location>::const_iterator validIter = validMoves.begin();
+			validIter != validMoves.end(); validIter++)
 	{
 		if (givenMoves.erase(*validIter) == 0)
 		{
-			os << "ERROR: pawn did not give move " << validIter->row() << ", " << validIter->column() << " when it was expected to!" << endl;
+			os << "ERROR: pawn did not give move "
+				<< validIter->row() << ", " << validIter->column()
+				<< " when it was expected to!" << endl;
 			return false;
 		}
 	}
@@ -105,13 +122,14 @@ bool Pawn::Test(ostream& os)
 	if (givenMoves.size() > 0)
 	{
 		// extra moves given that don't belong
-		for (set<Location>::const_iterator extraIter = givenMoves.begin(); extraIter != givenMoves.end(); extraIter++)
+		for (set<Location>::const_iterator extraIter = givenMoves.begin();
+				extraIter != givenMoves.end(); extraIter++)
 		{
-			os << "ERROR: pawn gave extra move " << extraIter->row() << ", " << extraIter->column() << endl;
+			os << "ERROR: pawn gave extra move "
+				<< extraIter->row() << ", " << extraIter->column() << endl;
 		}
 		return false;
 	}
-	os << "Pawn passed." << endl;
 	return true;
 }
 

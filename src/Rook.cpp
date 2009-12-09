@@ -52,11 +52,14 @@ bool Rook::Test(ostream& os)
 	validMoves.push_back(Location(4,3));
 	validMoves.push_back(Location(5,3));
 
-	for (vector<Location>::const_iterator validIter = validMoves.begin(); validIter != validMoves.end(); validIter++)
+	for (vector<Location>::const_iterator validIter = validMoves.begin();
+			validIter != validMoves.end(); validIter++)
 	{
 		if (givenMoves.erase(*validIter) == 0)
 		{
-			os << "ERROR: rook did not give move " << validIter->row() << ", " << validIter->column() << " when it was expected to!" << endl;
+			os << "ERROR: rook did not give move "
+				<< validIter->row() << ", " << validIter->column()
+				<< " when it was expected to!" << endl;
 			return false;
 		}
 	}
@@ -64,9 +67,11 @@ bool Rook::Test(ostream& os)
 	if (givenMoves.size() > 0)
 	{
 		// extra moves given that don't belong
-		for (set<Location>::const_iterator extraIter = givenMoves.begin(); extraIter != givenMoves.end(); extraIter++)
+		for (set<Location>::const_iterator extraIter = givenMoves.begin();
+				extraIter != givenMoves.end(); extraIter++)
 		{
-			os << "ERROR: rook gave extra move " << extraIter->row() << ", " << extraIter->column() << endl;
+			os << "ERROR: rook gave extra move "
+				<< extraIter->row() << ", " << extraIter->column() << endl;
 		}
 		return false;
 	}

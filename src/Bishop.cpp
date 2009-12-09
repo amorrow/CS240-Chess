@@ -55,11 +55,14 @@ bool Bishop::Test(ostream & os)
 	validMoves.push_back(Location(6, 3));
 	validMoves.push_back(Location(7, 2));
 
-	for (vector<Location>::const_iterator validIter = validMoves.begin(); validIter != validMoves.end(); validIter++)
+	for (vector<Location>::const_iterator validIter = validMoves.begin();
+			validIter != validMoves.end(); validIter++)
 	{
 		if (givenMoves.erase(*validIter) == 0)
 		{
-			os << "ERROR: bishop did not give move " << validIter->row() << ", " << validIter->column() << " when it was expected to!" << endl;
+			os << "ERROR: bishop did not give move "
+				<< validIter->row() << ", " << validIter->column()
+				<< " when it was expected to!" << endl;
 			return false;
 		}
 	}
@@ -67,9 +70,11 @@ bool Bishop::Test(ostream & os)
 	if (givenMoves.size() > 0)
 	{
 		// extra moves given that don't belong
-		for (set<Location>::const_iterator extraIter = givenMoves.begin(); extraIter != givenMoves.end(); extraIter++)
+		for (set<Location>::const_iterator extraIter = givenMoves.begin();
+				extraIter != givenMoves.end(); extraIter++)
 		{
-			os << "ERROR: bishop gave extra move " << extraIter->row() << ", " << extraIter->column() << endl;
+			os << "ERROR: bishop gave extra move "
+				<< extraIter->row() << ", " << extraIter->column() << endl;
 		}
 		return false;
 	}
