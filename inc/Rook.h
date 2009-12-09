@@ -11,6 +11,7 @@ public:
 	Rook(ChessColor color);
 	virtual ~Rook();
 	virtual std::set<Location> validMoves(Location current, Board& board) const;
+	static bool Test(std::ostream& os);
 };
 
 #endif

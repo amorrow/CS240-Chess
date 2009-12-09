@@ -1491,4 +1491,4 @@ obj/Rook.o: src/Rook.cpp inc/Rook.h inc/Piece.h inc/Location.h \
  /usr/include/glib-2.0/glib/gurifuncs.h inc/Board.h
 test/obj/main.o: test/src/main.cpp inc/Bishop.h inc/Piece.h \
  inc/Location.h inc/ChessDefinitions.h inc/King.h inc/Knight.h inc/Pawn.h \
- inc/Queen.h inc/Rook.h inc/Bishop.h
+ inc/Queen.h inc/Rook.h inc/Bishop.h inc/Rook.h
