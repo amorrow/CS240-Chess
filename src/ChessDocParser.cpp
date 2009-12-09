@@ -73,6 +73,44 @@ void ChessDocParser::on_start_element(
 	}
 }
 
+void ChessDocParser::parseCloseBoardState(const ustring& element_name)
+{
+	if (element_name != "piece" && element_name != "board")
+	{
+		g_debug("bad close tag: %s", element_name.c_str());
+		throw MarkupError(MarkupError::INVALID_CONTENT, "invalid close tag");
+	}
+	if (element_name == "board")
+	{
+		state = InChessGameState;
+	}
+}
+
+void ChessDocParser::parseCloseHistoryState(const ustring& element_name)
+{
+	if (element_name != "history")
+		throw MarkupError(MarkupError::INVALID_CONTENT, "invalid close tag");
+	state = InChessGameState;
+	// set the current player's turn
+	// by looking at who took a turn last
+	if (this->move.piece() != NULL)
+	{
+		ChessColor currentPlayer = (this->move.piece()->color() == ChessColorWhite
+				? ChessColorBlack : ChessColorWhite);
+		game.setCurrentPlayer(currentPlayer);
+	}
+}
+
+void ChessDocParser::parseCloseMove(const ustring& element_name)
+{
+	if (element_name == "move")
+	{
+		// put the completed move into the history
+		game.addToHistory(this->move);
+		state = InHistoryState;
+	}
+}
+
 void ChessDocParser::on_end_element(ParseContext& context, const ustring& element_name)
 {
 	g_debug("ChessDocParser::on_end_element");
@@ -83,44 +121,17 @@ void ChessDocParser::on_end_element(ParseContext& context, const ustring& elemen
 			state = EndState;
 			break;
 		case InBoardState:
-			if (element_name != "piece" && element_name != "board")
-			{
-				g_debug("bad close tag: %s", element_name.c_str());
-				throw MarkupError(MarkupError::INVALID_CONTENT, "invalid close tag");
-			}
-			if (element_name == "board")
-			{
-				state = InChessGameState;
-			}
+			parseCloseBoardState(element_name);
 			break;
 		case InHistoryState:
-			if (element_name != "history")
-				throw MarkupError(MarkupError::INVALID_CONTENT, "invalid close tag");
-			state = InChessGameState;
-			// set the current player's turn
-			// by looking at who took a turn last
-			if (this->move.piece() != NULL)
-			{
-				ChessColor currentPlayer = (this->move.piece()->color() == ChessColorWhite
-						? ChessColorBlack : ChessColorWhite);
-				game.setCurrentPlayer(currentPlayer);
-			}
+			parseCloseHistoryState(element_name);
 			break;
 		case InMoveState:
 		case InMoveAfterFirstPieceState:
-			if (element_name == "move")
-				throw MarkupError(MarkupError::INVALID_CONTENT, "not enough <piece> tags in <move> tag");
 		case InMoveAfterSecondPieceState:
 		case InMoveAfterThirdPieceState:
-			if (element_name != "piece" && element_name != "move")
-				throw MarkupError(MarkupError::INVALID_CONTENT, "invalid close tag");
-			if (element_name == "move")
-			{
-				// put the completed move into the history
-				game.addToHistory(this->move);
-				state = InHistoryState;
-			}
-			break;
+		parseCloseMove(element_name);
+				break;
 		case EndState:
 			throw MarkupError(MarkupError::INVALID_CONTENT, "no tags allowed after </chessgame>");
 	}

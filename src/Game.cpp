@@ -199,9 +199,8 @@ bool Game::makeMove(Location oldLoc, Location newLoc)
 	// perform the move
 	_board.movePiece(oldLoc, newLoc);
 	// change the game status
-	updateGameStatus();
-	// flip the turn
 	flipTurns();
+	updateGameStatus();
 	updateMessage();
 	return true;
 }
@@ -265,10 +264,13 @@ void Game::updateGameStatus()
 	{
 		_status = ChessGameStatusBlackWins;
 	}
-	else if (_board.stalemate())
+	else if ((_status == ChessGameStatusWhitesTurn && _board.playerInStalemate(ChessColorWhite))
+			|| (_status == ChessGameStatusBlacksTurn && _board.playerInStalemate(ChessColorBlack)))
 	{
 		_status = ChessGameStatusStalemate;
 	}
+	
+
 }
 
 void Game::updateMessage()

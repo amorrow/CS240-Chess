@@ -38,7 +38,7 @@ public:
 	void placeDefaultPieces();
 	
 	// Algorithms
-	bool stalemate();
+	bool playerInStalemate(ChessColor color);
 	bool playerInCheck(ChessColor color);
 	bool whiteInCheck();
 	bool blackInCheck();

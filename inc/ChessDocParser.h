@@ -45,6 +45,9 @@ private:
 	void parseAfterSecondState(
 			const Glib::ustring& element_name,
 			const AttributeMap& attributes);
+	void parseCloseBoardState(const ustring& element_name);
+	void parseCloseHistoryState(const ustring& element_name);
+	void parseCloseMove(const ustring& element_name);
 protected:
 	virtual void on_error(ParseContext& context, const MarkupError& error);
 	virtual void on_start_element(
