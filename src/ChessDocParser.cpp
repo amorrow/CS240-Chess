@@ -97,6 +97,14 @@ void ChessDocParser::on_end_element(ParseContext& context, const ustring& elemen
 			if (element_name != "history")
 				throw MarkupError(MarkupError::INVALID_CONTENT, "invalid close tag");
 			state = InChessGameState;
+			// set the current player's turn
+			// by looking at who took a turn last
+			if (this->move.piece() != NULL)
+			{
+				ChessColor currentPlayer = (this->move.piece()->color() == ChessColorWhite
+						? ChessColorBlack : ChessColorWhite);
+				game.setCurrentPlayer(currentPlayer);
+			}
 			break;
 		case InMoveState:
 		case InMoveAfterFirstPieceState:
@@ -110,7 +118,6 @@ void ChessDocParser::on_end_element(ParseContext& context, const ustring& elemen
 			{
 				// put the completed move into the history
 				game.addToHistory(this->move);
-				move = Move();
 				state = InHistoryState;
 			}
 			break;

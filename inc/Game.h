@@ -27,6 +27,7 @@ private:
 	
 	void clear();
 	void updateGameStatus();
+	void flipTurns();
 	std::string pieceTag(PiecePtr piece, Location loc);
 public:
 	// Both of the following throw exceptions on errors.
@@ -64,6 +65,10 @@ public:
 	// Puts the given move in the history.
 	// Should only be called if you know what you're about.
 	void addToHistory(Move move);
+
+	// Changes the current player's turn.
+	// Should only be called if you know what you're about.
+	void setCurrentPlayer(ChessColor color);
 };
 
 #endif

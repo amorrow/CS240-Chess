@@ -86,6 +86,9 @@ depend : $(shell ls src/*.cpp) $(shell ls inc/*.h)
 	@for f in $(SOURCES) ; do g++ -MM -MT obj/$$f.o $(FLAGS) $(CFLAGS) src/$$f.cpp >> depend.mk; done
 	@g++ -MM -MT $(TEST_MAIN_OBJ) $(FLAGS) $(CFLAGS) $(TEST_MAIN_SOURCE) >> depend.mk
 
+depend.mk : 
+	@touch depend.mk
+
 include depend.mk
 
 

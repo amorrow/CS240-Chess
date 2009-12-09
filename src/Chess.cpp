@@ -7,6 +7,7 @@
 
 #include <set>
 #include <iostream>
+#include <fstream>
 #include "SelectDialog.h"
 #include "Chess.h"
 #include "ChessInterface.h"
@@ -313,6 +314,10 @@ void Chess::on_SaveGameAs()
 	{
 		gui->SetStatusBar("Could not save game!");
 	}
+	catch (ofstream::failure e)
+	{
+		gui->SetStatusBar("Could not save game!");
+	}
 }
 void Chess::on_LoadGame()
 {
@@ -323,7 +328,20 @@ void Chess::on_LoadGame()
 	string filename = gui->SelectLoadFile();
 	if (filename != "")
 	{
-		chessInterface->loadGame(filename);
+		try
+		{
+			chessInterface->loadGame(filename);
+		}
+		catch (ifstream::failure e)
+		{
+			gui->SetStatusBar("Could not load game!");
+			return;
+		}
+		catch (Glib::Error &e)
+		{
+			gui->SetStatusBar("Could not load game!");
+			return;
+		}
 		gui->SetStatusBar("Loaded game...");
 		this->RedrawBoard(true);
 	}

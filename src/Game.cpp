@@ -27,6 +27,12 @@ void Game::load(string path)
 	ChessDocParser parser(*this);
 	ParseContext context(parser);
 	ifstream inFile(path.c_str());
+	inFile.exceptions(ifstream::badbit);
+	if (inFile.fail())
+	{
+		g_warning("Could not open file!");
+		throw ifstream::failure("couldn't open file!");
+	}
 	char buffer[1024];
 	try
 	{
@@ -41,11 +47,14 @@ void Game::load(string path)
 		g_warning("Could not open file!");
 		g_warning("Message: %s", err.what().c_str());
 	}
+	// now update the game status
+	updateGameStatus();
 }
 
 void Game::save(string path)
 {
 	ofstream outFile(path.c_str());
+	outFile.exceptions(ofstream::badbit);
 	outFile << "<chessgame>";
 	outFile << "<board>";
 	for (int row = 0; row < BOARD_NUM_ROWS; row++)
@@ -190,6 +199,8 @@ bool Game::makeMove(Location oldLoc, Location newLoc)
 	_board.movePiece(oldLoc, newLoc);
 	// change the game status
 	updateGameStatus();
+	// flip the turn
+	flipTurns();
 	return true;
 }
 
@@ -211,6 +222,7 @@ bool Game::undoMove()
 	// This ought to work. Frankly, I'm not completely positive,
 	// but it seems to function properly. Check here for bugs, though.
 	updateGameStatus();
+	flipTurns();
 	return true;
 }
 
@@ -229,45 +241,42 @@ set<Location> Game::locationsChangedByLastMove() const
 	return locs;
 }
 
-void Game::updateGameStatus()
+void Game::flipTurns()
 {
-	if (_board.stalemate())
+	if (_status == ChessGameStatusWhitesTurn)
 	{
-		_status = ChessGameStatusStalemate;
-		_message = ChessStatusMessageStalemate;
-	}
-	// flip whose turn it is
-	else if (_status == ChessGameStatusWhitesTurn)
-	{
-		if (_board.blackInCheckmate())
-		{
-			_status = ChessGameStatusWhiteWins;
-			_message = ChessStatusMessageWhiteWins;
-		}
+		if (_board.blackInCheck())
+			_message = ChessStatusMessageBlackInCheck;
 		else
-		{
-			if (_board.blackInCheck())
-				_message = ChessStatusMessageBlackInCheck;
-			else
-				_message = ChessStatusMessageBlacksTurn;
-			_status = ChessGameStatusBlacksTurn;
-		}
+			_message = ChessStatusMessageBlacksTurn;
+		_status = ChessGameStatusBlacksTurn;
 	}
 	else
 	{
-		if (_board.whiteInCheckmate())
-		{
-			_status = ChessGameStatusBlackWins;
-			_message = ChessStatusMessageBlackWins;
-		}
+		_status = ChessGameStatusWhitesTurn;
+		if (_board.whiteInCheck())
+			_message = ChessStatusMessageWhiteInCheck;
 		else
-		{
-			_status = ChessGameStatusWhitesTurn;
-			if (_board.whiteInCheck())
-				_message = ChessStatusMessageWhiteInCheck;
-			else
-				_message = ChessStatusMessageWhitesTurn;
-		}
+			_message = ChessStatusMessageWhitesTurn;
+	}
+}
+
+void Game::updateGameStatus()
+{
+	if (_status == ChessGameStatusWhitesTurn && _board.blackInCheckmate())
+	{
+		_status = ChessGameStatusWhiteWins;
+		_message = ChessStatusMessageWhiteWins;
+	}
+	else if (_status == ChessGameStatusBlacksTurn && _board.whiteInCheckmate())
+	{
+		_status = ChessGameStatusBlackWins;
+		_message = ChessStatusMessageBlackWins;
+	}
+	else if (_board.stalemate())
+	{
+		_status = ChessGameStatusStalemate;
+		_message = ChessStatusMessageStalemate;
 	}
 }
 
@@ -290,5 +299,13 @@ bool Game::currentPlayerInCheck()
 void Game::addToHistory(Move move)
 {
 	_history.push_back(move);
+}
+
+void Game::setCurrentPlayer(ChessColor color)
+{
+	if (color == ChessColorWhite)
+		_status = ChessGameStatusWhitesTurn;
+	else
+		_status = ChessGameStatusBlacksTurn;
 }
 
