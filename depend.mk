@@ -1445,7 +1445,7 @@ obj/Pawn.o: src/Pawn.cpp inc/Pawn.h inc/Piece.h inc/Location.h \
 obj/Piece.o: src/Piece.cpp inc/Piece.h inc/Location.h \
  inc/ChessDefinitions.h inc/Board.h inc/Piece.h
 obj/Queen.o: src/Queen.cpp inc/Queen.h inc/Rook.h inc/Piece.h \
- inc/Location.h inc/ChessDefinitions.h inc/Bishop.h
+ inc/Location.h inc/ChessDefinitions.h inc/Bishop.h inc/Board.h
 obj/Rook.o: src/Rook.cpp inc/Rook.h inc/Piece.h inc/Location.h \
  inc/ChessDefinitions.h inc/ChessDefinitions.h \
  /usr/include/glib-2.0/glib.h /usr/include/glib-2.0/glib/galloca.h \
@@ -1490,4 +1490,5 @@ obj/Rook.o: src/Rook.cpp inc/Rook.h inc/Piece.h inc/Location.h \
  /usr/include/glib-2.0/glib/gtimer.h /usr/include/glib-2.0/glib/gtree.h \
  /usr/include/glib-2.0/glib/gurifuncs.h inc/Board.h
 test/obj/main.o: test/src/main.cpp inc/Bishop.h inc/Piece.h \
- inc/Location.h inc/ChessDefinitions.h inc/King.h inc/Knight.h inc/Pawn.h
+ inc/Location.h inc/ChessDefinitions.h inc/King.h inc/Knight.h inc/Pawn.h \
+ inc/Queen.h inc/Rook.h inc/Bishop.h

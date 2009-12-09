@@ -4,6 +4,7 @@
 #include "King.h"
 #include "Knight.h"
 #include "Pawn.h"
+#include "Queen.h"
 #include <iostream>
 
 using namespace std;
@@ -18,6 +19,9 @@ int main(int argc, char** argv)
 		cout << "Knight failed." << endl;
 	if (!Pawn::Test(cout))
 		cout << "Pawn failed." << endl;
+	if (!Queen::Test(cout))
+		cout << "Queen failed." << endl;
+
 	return 0;
 }
 
